@@ -7,10 +7,10 @@ const themeToggler = {
       "--lightTheme": "#F0F3F4",
       "--darkTheme": "#212F3D"
     },
-    body: document.querySelector("body"),
-    lightThemeButton: document.querySelector("#toggle-light"),
-    darkThemeButton: document.querySelector("#toggle-dark"),
+    lightThemeButton: document.getElementById("toggle-light"),
+    darkThemeButton: document.getElementById("toggle-dark"),
     headingTheme: document.getElementById("toggle-heading"),
+    body: document.querySelector("body"),
     toggleColor: document.querySelectorAll(".darkThemeColor, .lightThemeColor"),
     currentTheme: "lightTheme",
     isLightTheme: function () {
