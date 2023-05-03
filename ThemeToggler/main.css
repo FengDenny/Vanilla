@@ -1,3 +1,5 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Darumadrop+One&family=Playfair+Display&display=swap');
 * {
     box-sizing: border-box;
     margin:0;
@@ -6,12 +8,18 @@
 
 :root{
     --darkTheme: #212F3D;
+    --darkTheme-hover: #687683;
     --lightTheme:#F0F3F4;
+    --lightTheme-hover:#f7e0e0;
+    --header-font: 'Darumadrop One', cursive;
+    --description-font: 'Playfair Display', serif;
+
 }
 
 body{
 
     transition: background 0.5s ease-in-out;
+    font-family: var(--header-font);
 }
 
 ul{
@@ -19,16 +27,23 @@ ul{
 }
 
 
-/* Theme Coloring START */
-.darkThemeBG{
-    background: var(--darkTheme);
-}
-.darkThemeColor{
- color:var(--darkTheme)
+/* Text */
+.description-text{
+  font-family: var(--description-font);
 }
 
-.lightThemeColor{
-    color:var(--lightTheme)
+/* Theme Coloring START */
+.lightThemeBG {
+  background-color: var(--lightTheme);
+}
+.darkThemeBG {
+  background-color: var(--darkTheme);
+}
+.lightThemeColor {
+  color: var(--darkTheme);
+}
+.darkThemeColor {
+  color: var(--lightTheme);
 }
 
 /* Theme Coloring END */
@@ -56,12 +71,68 @@ ul{
     background: none;
   }
 
-  .fa-moon{
-    color:var(--darkTheme)
+  .fa-moon, .fa-sun{
+     -webkit-transition: all 200ms ease-in;
+    -webkit-transform: scale(1); 
+    -ms-transition: all 200ms ease-in;
+    -ms-transform: scale(1); 
+    -moz-transition: all 200ms ease-in;
+    -moz-transform: scale(1);
+    transition: all 200ms ease-in;
+    transform: scale(1);   
   }
+
+  .fa-moon:hover, .fa-sun:hover{
+    -webkit-transition: all 200ms ease-in;
+    -webkit-transform: scale(1.1);
+    -ms-transition: all 200ms ease-in;
+    -ms-transform: scale(1.1);   
+    -moz-transition: all 200ms ease-in;
+    -moz-transform: scale(1.1);
+    transition: all 200ms ease-in;
+    transform: scale(1.1);
+  }  
+  
+  .fa-moon{
+    color:var(--darkTheme);
+   
+  }
+
+  .fa-moon:hover{
+    color:var(--darkTheme-hover)
+  }
+
 
   .fa-sun{
     color:var(--lightTheme)
   }
 
+  .fa-sun:hover{
+    color:var(--lightTheme-hover)
+  }
+
 /* NAV END */
+
+/* Hero */
+
+.hero{
+ display: flex;
+ justify-content: center;
+ height:50vh;
+ width:100%;
+}
+
+.hero .heading{
+  position: relative;
+  top:50%;
+  font-size:3rem;
+}
+
+/* Toggler */
+.active{
+  display:block;
+}
+
+.notActive{
+  display: none;
+}
