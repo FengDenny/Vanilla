@@ -8,8 +8,10 @@
 
 :root{
     --darkTheme: #212F3D;
+    --darkTheme-description: #7189a3;
     --darkTheme-hover: #687683;
     --lightTheme:#F0F3F4;
+    --lightTheme-description: #3d4d5e;
     --lightTheme-hover:#f7e0e0;
     --header-font: 'Darumadrop One', cursive;
     --description-font: 'Playfair Display', serif;
@@ -36,15 +38,26 @@ ul{
 .lightThemeBG {
   background-color: var(--lightTheme);
 }
-.darkThemeBG {
-  background-color: var(--darkTheme);
-}
+
 .lightThemeColor {
   color: var(--darkTheme);
+}
+
+.lightThemeDescription {
+  color:var(--lightTheme-description)
+}
+
+.darkThemeBG {
+  background-color: var(--darkTheme);
 }
 .darkThemeColor {
   color: var(--lightTheme);
 }
+
+.darkThemeDescription {
+  color:var(--darkTheme-description)
+}
+
 
 /* Theme Coloring END */
 
@@ -125,7 +138,16 @@ ul{
 .hero .heading{
   position: relative;
   top:50%;
+}
+
+.hero .heading h1{
   font-size:3rem;
+}
+
+.hero .heading p{
+  font-size:1.2rem;
+ text-align: center;
+ margin-top: 5px;
 }
 
 /* Toggler */
