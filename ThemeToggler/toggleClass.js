@@ -10,8 +10,8 @@ const themeToggler = {
     lightThemeButton: document.getElementById("toggle-light"),
     darkThemeButton: document.getElementById("toggle-dark"),
     headingTheme: document.getElementById("toggle-heading"),
+    descriptionTheme:document.getElementById("toggle-description"),
     body: document.querySelector("body"),
-    toggleColor: document.querySelectorAll(".darkThemeColor, .lightThemeColor"),
     currentTheme: "lightTheme",
     isLightTheme: function () {
         return this.currentTheme === "lightTheme";
@@ -22,11 +22,9 @@ const themeToggler = {
   
       this.headingTheme.classList.remove( this.isLightTheme() ? "darkThemeColor" : "lightThemeColor");
       this.headingTheme.classList.add( this.isLightTheme() ? "lightThemeColor" : "darkThemeColor");
-  
-      this.toggleColor.forEach(element => {
-        element.classList.remove( this.isLightTheme() ? "darkThemeColor" : "lightThemeColor");
-        element.classList.add( this.isLightTheme() ? "lightThemeColor" : "darkThemeColor");
-      });
+
+      this.descriptionTheme.classList.remove(this.isLightTheme() ? "darkThemeDescription" : "lightThemeDescription")
+      this.descriptionTheme.classList.add(this.isLightTheme() ? "lightThemeDescription" : "darkThemeDescription")
   
       this.lightThemeButton.classList.toggle("notActive", this.isLightTheme());
       this.darkThemeButton.classList.toggle("notActive", !this.isLightTheme());
