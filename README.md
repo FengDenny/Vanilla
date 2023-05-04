@@ -4,6 +4,6 @@ Vanilla code projects with HTML5, CSS3, and behavior delegation design pattern J
 
 ## Project Descriptions
 
-| Number |     Name      |                                     url                                      |
+| Number |     Name      |                                     URL                                      |
 | :----: | :-----------: | :--------------------------------------------------------------------------: |
 |   1    | Theme Toggler | [ Vanilla Toggler](https://vanillathemetoggler.netlify.app/) |
