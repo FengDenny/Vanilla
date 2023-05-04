@@ -142,13 +142,18 @@ ul{
 
 .hero .heading h1{
   font-size:3rem;
+  animation : slideLeft 1.1s cubic-bezier(0.68, -0.55, 0.265, 1.10) forwards; 
 }
 
 .hero .heading p{
   font-size:1.2rem;
  text-align: center;
  margin-top: 5px;
+ animation : slideRight 1.1s cubic-bezier(0.68, -0.55, 0.265, 1.10) forwards; 
+
 }
+
+
 
 /* Toggler */
 .active{
@@ -157,4 +162,27 @@ ul{
 
 .notActive{
   display: none;
+}
+
+/* CSS Animations */
+
+@keyframes slideLeft{
+
+  from {
+    transform: translateX(calc(-30% + 10px));
+  }
+
+  to {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes slideRight{
+  from {
+    transform: translateX(calc(30% + 10px));
+  }
+
+  to{
+    transform: translateX(0%);
+  }
 }
