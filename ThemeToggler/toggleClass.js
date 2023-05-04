@@ -1,12 +1,4 @@
 const themeToggler = {
-    darkTheme: {
-      "--darkTheme": "#212F3D",
-      "--lightTheme": "#F0F3F4"
-    },
-    lightTheme: {
-      "--lightTheme": "#F0F3F4",
-      "--darkTheme": "#212F3D"
-    },
     lightThemeButton: document.getElementById("toggle-light"),
     darkThemeButton: document.getElementById("toggle-dark"),
     headingTheme: document.getElementById("toggle-heading"),
