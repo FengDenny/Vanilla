@@ -11,8 +11,7 @@ const themeToggler = {
     themeToggler: function () {  
       this.body.classList.toggle("lightThemeBG", this.isLightTheme());
       this.body.classList.toggle("darkThemeBG", !this.isLightTheme());
-  
-      
+
       // hero heading
       this.headingTheme.classList.remove( this.isLightTheme() ? "darkThemeColor" : "lightThemeColor");
       this.headingTheme.classList.add( this.isLightTheme() ? "lightThemeColor" : "darkThemeColor");
@@ -42,6 +41,8 @@ const themeToggler = {
   function currentTheme() {
     themeToggler.lightThemeButton.classList.toggle("notActive", themeToggler.isLightTheme());
     themeToggler.darkThemeButton.classList.toggle("notActive", !themeToggler.isLightTheme());
+    themeToggler.headingTheme.classList.add( themeToggler.isLightTheme() ? "lightThemeColor" : "darkThemeColor");
+    themeToggler.descriptionTheme.classList.add(themeToggler.isLightTheme() ? "lightThemeDescription" : "darkThemeDescription")
   }
   
   currentTheme();
