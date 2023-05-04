@@ -37,7 +37,7 @@ themeToggler.lightThemeButton.addEventListener("click", () => {
 
 ### **toggleClass.js**
 
-Implemented using `classList` to return `DOMTokenList`, utilizing its `instance methods` to toggle between dark/light theme.
+Implemented using `classList` to return `DOMTokenList`, utilizing `instance methods` to toggle between dark/light theme.
 
 
 ### **toggleStyle.js**
