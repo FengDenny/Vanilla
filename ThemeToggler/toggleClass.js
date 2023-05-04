@@ -20,12 +20,16 @@ const themeToggler = {
       this.body.classList.toggle("lightThemeBG", this.isLightTheme());
       this.body.classList.toggle("darkThemeBG", !this.isLightTheme());
   
+      
+      // hero heading
       this.headingTheme.classList.remove( this.isLightTheme() ? "darkThemeColor" : "lightThemeColor");
       this.headingTheme.classList.add( this.isLightTheme() ? "lightThemeColor" : "darkThemeColor");
-
+      
+      // hero description
       this.descriptionTheme.classList.remove(this.isLightTheme() ? "darkThemeDescription" : "lightThemeDescription")
       this.descriptionTheme.classList.add(this.isLightTheme() ? "lightThemeDescription" : "darkThemeDescription")
   
+      // theme toggle buttons
       this.lightThemeButton.classList.toggle("notActive", this.isLightTheme());
       this.darkThemeButton.classList.toggle("notActive", !this.isLightTheme());
   
