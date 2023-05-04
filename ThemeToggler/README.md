@@ -6,7 +6,7 @@
 
 ## CSS3 
 
-- CSS is used and written to help `toggleClass.js` and `toggleStyle.js` to switch between `dark or light theme`
+- CSS is used and written to help `toggleClass.js` to switch between `dark or light theme`
 
 **Font** 
 
