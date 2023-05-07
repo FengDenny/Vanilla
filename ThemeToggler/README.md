@@ -45,6 +45,6 @@ Implemented using `classList` to return `DOMTokenList`, utilizing `instance meth
 Implemented using `style` to manipulate inline styling using `CSSStyleDeclaration` object to toggle between dark/light theme.
 
 
-***Script used***
+***Icon used***
 
 **FontAwesome**
