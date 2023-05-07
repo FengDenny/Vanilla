@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./main.css">
+    <script src="https://kit.fontawesome.com/6c814788b5.js" crossorigin="anonymous"></script>
+    <script src="./accordionClass.js" defer></script>
+    <title>Accordion | Coders Knowledge</title>
+</head>
+<body>
+    <section>
+        <div class="hero">
+            <h1 class="header">Accordion</h1>
+            <h4 class="description">Built using behavior delegation, closures, and currying.</h4>
+            <iframe src="https://stackblitz.com/edit/js-n78ruc?embed=1&file=index.js&hideExplorer=1&hideNavigation=1&theme=dark&view=editor"></iframe>
+        </div>
+    </section>
+    <section>
+        <div class="accordion-container">
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="header-container">
+                        <div class="accordion-item-header">Behavior Delegation</div>
+                        <button  class="accordion-open"><i class="fa-solid fa-angles-up"></i></button>
+                        <button class="accordion-close"><i class="fa-solid fa-angles-down"></i></button>
+                    </div>
+                    <div id="item-content" class="accordion-item-content">
+
+                        <p>
+                            <code>Behavior delegation</code> is a design pattern where an object delegates some of its behavior to another object or function. 
+                            This is commonly used in JavaScript to create reusable and composable code.
+                        </p>
+
+                        <p>
+                            <code>Behavior delegation</code>  is used when the <code>init</code> function sets up event listeners 
+                            for each accordion item by calling the <code>setupAccordion</code> function for each item found by <code>querySelectorAll</code>. 
+                            The <code>setupAccordion</code>  function then adds event listeners to the open and close buttons for each accordion item.
+                        </p>
+                    </div>
+                 </div>
+             </div>
+             <div class="accordion">
+                <div class="accordion-item">
+                    <div class="header-container">
+                        <div class="accordion-item-header">Closures</div>
+                        <button  class="accordion-open"><i class="fa-solid fa-angles-up"></i></button>
+                        <button  class="accordion-close"><i class="fa-solid fa-angles-down"></i></button>
+                    </div>
+                    <div id="item-content" class="accordion-item-content">
+                       <p>
+                        <code>Closure</code> is a feature in JavaScript that allows a function to remember the variables in its parent scope, 
+                        even after the parent function has returned. This can be used to create private variables and functions, 
+                        and to create functions that "remember" certain values.
+                       </p>
+                       <p>
+                        Closure is used when the <code>toggleActive</code> function returns another function that has access to the 
+                        <code>item</code> parameter from the outer function's scope. This is because the returned function 
+                        is created inside the <code>toggleActive</code> function, which creates a closure around its parameters and variables.
+                       </p>
+                    </div>
+                 </div>
+             </div>
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="header-container">
+                        <div class="accordion-item-header">Currying</div>
+                        <button  class="accordion-open"><i class="fa-solid fa-angles-up"></i></button>
+                        <button class="accordion-close"><i class="fa-solid fa-angles-down"></i></button>
+                    </div>
+                    <div id="item-content" class="accordion-item-content">
+                    <p>
+                        <code>Currying</code> is a technique in functional programming where a function with multiple
+                        arguments is converted into a series of functions that take one argument each. This allows <code>Partial Functions</code>, 
+                        where a function is partially applied with some arguments and returns a new function that takes the remaining arguments.
+                    </p>
+                    <p>
+                        <code>Currying</code> is also used in the <code>toggleActive</code> function, where it returns another function that is passed to the event listener. 
+                        This allows us to pass additional arguments to the event listener function, which in this case is the <code>item</code> parameter.
+                    </p>
+                   </div>
+                 </div>
+             </div>
+        </div>
+
+      </section>
+</body>
+</html>
