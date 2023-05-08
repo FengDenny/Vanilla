@@ -12,7 +12,7 @@
 
 ***Google Font used***
 
-```
+```css
 --header-font: 'Darumadrop One', cursive;
 --description-font: 'Playfair Display', serif;
 ```
@@ -23,7 +23,7 @@
 
 > Example Usage
 
-```
+```javascript
 themeToggler.lightThemeButton.addEventListener("click", () => {
     themeToggler.currentTheme = "lightTheme";
     themeToggler.themeToggler();
@@ -48,3 +48,8 @@ Implemented using `style` to manipulate inline styling using `CSSStyleDeclaratio
 ***Icon used***
 
 **FontAwesome**
+
+```html
+<i class="fa-regular fa-moon fa-2xl "></i>
+<i class="fa-regular fa-sun fa-2xl "></i>
+```
