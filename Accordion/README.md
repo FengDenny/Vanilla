@@ -12,7 +12,7 @@
 
 ***Google Font used***
 
-```
+```css
  --header-font: 'Braah One', sans-serif;
  --description-font: 'Work Sans', sans-serif;
 ```
@@ -23,7 +23,7 @@
 
 > Closures and currying example usage
 
-```
+```javascript
 toggleActive: function(item) {
     return function() {
       const content = item.querySelector('.accordion-item-content');
@@ -38,11 +38,12 @@ toggleActive: function(item) {
       }
     };
   }
+
 ```
 
 > Behavior delegation example usage
 
-```
+```javascript
  init: function() {
     const items = document.querySelectorAll('.accordion-item');
     items.forEach(this.setupAccordion.bind(this));
@@ -69,7 +70,7 @@ toggleActive: function(item) {
 ***Icon used***
 
 **FontAwesome**
-```
+```html
 <i class="fa-solid fa-angles-up"></i>
 <i class="fa-solid fa-angles-down"></i>
 ```
