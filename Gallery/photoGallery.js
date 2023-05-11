@@ -4,12 +4,14 @@ const photoGallery = (function() {
   }
 
   function fetchPhotos() {
-    fetch(`${this.endpoint}?_start=${this.start}&_limit=${this.limit}`)
+    fetch(this.endpoint)
       .then(function(response){
         return response.json()
       })
       .then(function(data) {
-        this.photos = data;
+        const startIndex = this.start;
+        const endIndex = this.start + this.limit
+        this.photos = data.slice(startIndex, endIndex)
         this.createGallery();
         this.start += this.limit;
         this.fetching = false;
