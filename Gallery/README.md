@@ -33,7 +33,7 @@ galleryGrid: document.querySelector(".gallery-grid"),
 
 - `photoGallery.js` uses `Immediately Invoked Function Expression` (IIFE) to create a closure. 
 
-- We are using and defining `photoGallery` as an `IIFE`, so that It can be `immediately invoked` to help us generate a closure at the start. This will help us to `encapsulate` the function and all the variables within it. So that, it will only contain private state variables and not exposed to the global scope.  
+- We are using and defining `photoGallery` as an `IIFE`, so that It can be `immediately invoked` to help us generate a closure at the start. This will help us to `encapsulate` the function and all the variables within it. So that, it will only contain private state variables and not be exposed to the global scope.  
 
 > IIFE example usage
 
@@ -92,6 +92,22 @@ function fetchPhotos() {
 
 ```
 - `createGallery()` function uses `closure` to create a new function scope `createPhotoGallery()` using `forEach` method during each iterations to generate an HTML string for each photo.
+
+```js 
+
+  function createPhotoGallery(photo) {
+    const { title, thumbnailUrl } = photo;
+    const html = `
+      <div class="photo" data-title="${title}" data-thumbnail="${thumbnailUrl}">
+        <img src="${thumbnailUrl}" alt="${title}">
+        <div class="title-overlay">
+          <p>${title}</p>
+        </div>
+      </div>`;
+    return html;
+  }
+
+```
 
 - With the `bind` method help, we are ensuring that `this` keyword inside `forEach` will refer back to `PhotoGallery()` function. So that, it captures the `outer function scope` of `this.photos`, `this.galleryGrid` and etc.
 
