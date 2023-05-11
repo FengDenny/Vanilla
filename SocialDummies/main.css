@@ -1,0 +1,172 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&family=Sigmar&display=swap');
+
+*{
+    box-sizing: border-box;
+    margin:0;
+    padding:0
+}
+
+:root{
+    --header-font: 'Sigmar', cursive;
+    --description-font: 'Nunito', sans-serif;
+    --primary-color: #304d6d;
+    --secondary-color: #FFFFFF;
+    --description-color: #A8BFD9;
+    --button-color:#8fbaeb;
+    --button-color-hover:#7aace6;
+    --box-shadow: 0 2px 10px rgb(0 0 0 / 0.1);
+}
+
+body{
+
+    font-family: var(--header-font);
+    background: var(--primary-color);
+    color:var(--secondary-color);
+    font-size:calc(16px + 1vw);
+}
+
+
+
+.description-text{
+    font-family: var(--description-font);
+    color:var(--description-color)
+}
+
+.description-text-white{
+    font-family: var(--description-font);
+    color:var(--secondary-color)
+}
+
+
+/* Hero */
+
+.hero-container{
+    display: flex;
+    justify-content: center;
+}
+
+.hero-content{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    height:500px;
+}
+
+.hero h1{
+    font-size:3rem;
+}
+
+.hero h4{
+    font-size:1.3rem;
+}
+
+.hero h4 span{
+    font-size:1.5rem;
+    text-decoration: underline;
+    text-underline-offset: 9px;
+    text-decoration-color: var(--secondary-color);
+}
+
+
+/* Post */
+
+.posts{
+    display:flex;
+    justify-content: center;
+}
+
+.post-container{
+    display: flex;
+    flex-direction: column;   
+    width:100%;
+    max-width: 800px;
+}
+
+.card-container{
+    position: relative;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    padding:15px;
+ 
+}
+
+.card{
+    width:90%;
+    height:auto;
+    padding:15px;
+    margin:5px;
+    background: transparent;
+    border: 2px solid var(--secondary-color);
+    border-radius: 5px;
+    box-shadow: var(--box-shadow);
+    display:flex;
+    flex-wrap:wrap;
+    justify-content: space-between;
+}
+
+.card h2{
+    font-size:1.5rem;
+    width:100%;
+    max-width:400px;
+}
+
+.card p{
+    font-size:1rem;
+    width:100%;
+    max-width:400px
+}
+
+.card .card-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.card-btn .card-btn-view{
+    cursor: pointer;
+    border:none;
+    background: transparent;
+    color:var(--button-color)
+}
+
+.card-btn .card-btn-view:hover{
+    color:var(--button-color-hover)
+}
+
+/* spinner */
+  .spinner {
+    display: block;
+    color:var(--secondary-color);
+    width:50px;
+    height:50px;
+    animation: spin 1s linear infinite;
+    margin:0 auto;
+  }
+
+
+/* Animations */
+@keyframes spin {
+    /* Define the animation */
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+/* Media Queries */
+
+@media screen and ( max-width:497px){
+    .hero-content{
+        text-align: center;
+    }
+
+    
+.hero h1{
+    font-size:2.5rem;
+}
+
+}
