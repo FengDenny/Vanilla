@@ -139,11 +139,3 @@ function fetchPhotos() {
   }
 ```
 
-***Icon used***
-
-**FontAwesome**
-
-```html
-<i class="fa-regular fa-moon fa-2xl "></i>
-<i class="fa-regular fa-sun fa-2xl "></i>
-```
