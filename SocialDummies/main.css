@@ -82,17 +82,20 @@ body{
     max-width: 800px;
 }
 
+/* Post card */
+
 .card-container{
     position: relative;
     display:flex;
     flex-direction: column;
     align-items: center;
     padding:15px;
+    width:100%;
  
 }
 
+
 .card{
-    width:90%;
     height:auto;
     padding:15px;
     margin:5px;
@@ -101,28 +104,23 @@ body{
     border-radius: 5px;
     box-shadow: var(--box-shadow);
     display:flex;
+    flex-direction: column;
     flex-wrap:wrap;
-    justify-content: space-between;
 }
 
-.card h2{
+.card-header h2{
     font-size:1.5rem;
-    width:100%;
-    max-width:400px;
 }
 
-.card p{
+.card-header p{
     font-size:1rem;
-    width:100%;
-    max-width:400px
+    padding-top:4px
 }
 
 .card .card-btn{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  position: relative;
+  bottom:10px;
 }
-
 
 .card-btn .card-btn-view{
     cursor: pointer;
@@ -135,7 +133,38 @@ body{
     color:var(--button-color-hover)
 }
 
+/* Post comments */
+#comments.visible {
+    display: block;
+}
+
+.comment{
+    border-top:1px solid var(--description-color);
+    border-bottom: 1px solid var(--description-color);
+    margin:10px 0;
+}
+
+.comment-email{
+    font-size:1.2rem;
+    padding-top:10px;
+}
+
+.comment-body{
+    font-size:1rem;
+    padding:10px 0;
+}
+
+.card-header h2, 
+.card-header p,
+.comment-email,
+.comment-body 
+{
+    width:100%;
+    max-width:500px;
+}
+
 /* spinner */
+
   .spinner {
     display: block;
     color:var(--secondary-color);
@@ -147,6 +176,7 @@ body{
 
 
 /* Animations */
+
 @keyframes spin {
     /* Define the animation */
     0% {
@@ -167,6 +197,12 @@ body{
     
 .hero h1{
     font-size:2.5rem;
+}
+
+
+.comment-email{
+    width:100%;
+    font-size:1rem
 }
 
 }
