@@ -47,19 +47,11 @@ body{
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    height:60vh;
+    height:50vh;
 }
 
 .hero h1{
     font-size: calc(3rem + 0.5vw);
-}
-
-.hero iframe{
-margin-top:15px;
-  width:60%;
-  height:350px;
-  border:none
-
 }
 
 /* Accordion */
@@ -125,13 +117,12 @@ margin-top:15px;
   transition: all 0.3s ease-in-out;
 }
 
+
 .accordion-item.active .accordion-item-content {
-  display: block;
   animation: slide-down 0.3s ease-in-out;
 }
 
 .accordion-item:not(.active) .accordion-item-content {
-  overflow: hidden;
   animation: slide-up 0.3s ease-in-out;
 }
 
@@ -195,10 +186,5 @@ margin-top:15px;
   .accordion-close{
     top:2px;
 }
-
-.hero iframe{
-  margin-top:15px;
-    width:90%;
-  }
 
 }
