@@ -77,7 +77,7 @@ function createCard(posts){
 
 }
 
-async function toggleComments(e) {
+function toggleComments(e) {
     const button = e.target
     const card = button.closest(".card")
     const commentsSection = card.querySelector("#comments")
