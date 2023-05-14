@@ -8,6 +8,8 @@
 
 - CSS is used and written to help `accordionClass.js` to add or remove `active` and adding necessary animations using `visible`
 
+- CSS is also used and written to create the necessary UI layout
+
 **Font** 
 
 ***Google Font used***
