@@ -202,7 +202,7 @@ function toggleComments(e) {
 
 ### IntersectionObserver
 
-- Once we have displayed the first 50th items, as we scroll down to the last item inside `gallery-grid`, our `IntersectionObserver` will be called to showcase the next 50th items.
+- Once we have displayed the first 10th items, as we scroll down to the last item inside `#card-container`, our `IntersectionObserver` will be called to showcase the next 10th items.
 
 - `IntersectionObserver` is a better choice than to use `getBoundingClientRect()`, which can be slow and resource-intensive as it causes `overhead performances` by continuously checking for elements intersection regardless of viewports
 
