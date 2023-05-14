@@ -133,7 +133,7 @@ function hideSpinner(){
 ```
 - `fetchComments()` uses `currying` technique to help construct a `URL` endpoint to retrieve comments for a post based on each posts `postId`, returning a promise that resolves to an array of comments.
 
-- Using the `currying` technique, we are partially apply the `baseUrl` parameter and return a new function that takes two extra parameters  `postId` and `params`.
+- Using the `currying` technique, we are partially applying the `baseUrl` parameter and return a new function that takes two extra parameters  `postId` and `params`.
 
 
 #### createCard()
