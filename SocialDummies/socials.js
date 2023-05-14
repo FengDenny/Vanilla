@@ -3,6 +3,8 @@ const socialsPost = (function(){
         this.fetchAll()
         this.addCardButtonListener()
     }
+
+
     async function fetchAll(){
       try{      
         this.showSpinner()
@@ -10,24 +12,41 @@ const socialsPost = (function(){
         const posts = await response.json()
 
         // Iterate over each post and fetch comments
-        for (let post of posts){
-            const commentsResponse = await fetch(`${this.allPosts}${post.id}/comments`)
-            const comments = await commentsResponse.json()
-             // Add the comments to the current post object
+        for(let post of posts){
+            // higher-order function
+           const fetchComments = this.fetchComments(this.allPosts)
+           const comments = await fetchComments(post.id, "comments")
+            // Add the comments to the current post object
             post.comments = comments
         }
-        const startIndex = this.start;
-        const endIndex = this.start + this.limit;
-        this.posts = posts.slice(startIndex, endIndex)
+
+        this.posts = posts
+
+        // Set the posts property and the lastPost property
+        this.lastPost = this.cardContainer.lastElementChild
+
+        // Slice the posts array and create the cards
+        const startIndex = this.start
+        const endIndex = this.start + this.limit
+        const slicedPosts = this.posts.slice(startIndex, endIndex)
         this.start += this.limit
-        this.createCard()
-  
+        this.createCard(slicedPosts)
         this.hideSpinner()
         this.fetching = false
-
+    
       }catch(error){
         console.error(error)
       }
+    }
+
+    // currying technique to return new function taking two new params
+    // constructing the URL for fetch call using partially applied baseUrl, with two new params, postId and params
+    function fetchComments(baseUrl){
+        return async function(postId, params) {
+            const response = await fetch(`${baseUrl}${postId}/${params}`)
+            const comments = await response.json()
+            return comments
+        }
     }
 
     function createCardContent(posts){
@@ -46,8 +65,8 @@ const socialsPost = (function(){
     return html
 }
 
-function createCard(){
-    this.posts.forEach(function(post){
+function createCard(posts){
+    posts.forEach(function(post){
         const content = this.createCardContent(post)
         this.cardContainer.insertAdjacentHTML("beforeend", content)
     }.bind(this))
@@ -58,7 +77,7 @@ function createCard(){
 
 }
 
-function toggleComments(e) {
+async function toggleComments(e) {
     const button = e.target
     const card = button.closest(".card")
     const commentsSection = card.querySelector("#comments")
@@ -66,7 +85,7 @@ function toggleComments(e) {
     if(commentsSection.children.length === 0){
         const postId = card.dataset.id
         const post = this.posts.find(p =>Number(p.id) === Number(postId))
-        console.log(post)
+    
         if(post.comments !== undefined){
             post.comments.forEach((comment) => {
                 const html = `<div class="comment">
@@ -127,6 +146,7 @@ return{
     lastPost: null,
     init,
     fetchAll,
+    fetchComments,
     createCardContent,
     createCard,
     setupIntersectionObserver,
