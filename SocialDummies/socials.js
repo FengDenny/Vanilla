@@ -96,11 +96,22 @@ async function toggleComments(e) {
             })
         }
     }
+
     commentsSection.classList.toggle("visible")
-    if(!commentsSection.classList.contains("visible")) commentsSection.textContent =""
+    if (commentsSection.classList.contains("visible")) {
+         // Show the comments section with the slide-down animation
+        commentsSection.classList.remove("not-visible")
+    } else {
+
+         // Hide the comments section with the slide-up animation
+         commentsSection.classList.add("not-visible")
+         commentsSection.addEventListener("animationend", function() {
+             commentsSection.classList.remove("not-visible")
+             commentsSection.textContent = "";
+         }, { once: true });
+    }
     button.textContent = commentsSection.classList.contains("visible") ? "Hide Comments" : "View Comments"
 }
-
 
 function setupIntersectionObserver(){
     const options ={
