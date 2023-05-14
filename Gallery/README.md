@@ -21,7 +21,7 @@
 
 ## JavaScript (ES6) 
 
-- The main part of this `photoGallery.js` is to deep dive into `Fetch API` to access `jsonplaceholder` dummy data.
+- The main part of this `photoGallery.js` is to deep dive into `Fetch API` to access `JSONPlaceholder` dummy data.
 
 - Using the returned `Promise` request, we would display the data inside  `gallery-grid` using `createGallery()` function
 
