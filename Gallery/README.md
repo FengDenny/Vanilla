@@ -6,7 +6,7 @@
 
 ## CSS3 
 
-- CSS is used and written to help display the dummy data gallery using `grid` syste. 
+- CSS is used and written to help display the dummy data gallery using `grid` system. 
 - Each photo displays their title with `title overlay` on `hover` using `transform`, `opacity` property, and `absolute` positioning 
 
 
