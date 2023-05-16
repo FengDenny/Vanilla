@@ -13,6 +13,6 @@ Vanilla code projects with HTML5, CSS3, and JavaScript design patterns
 
 ## DSA VisAlgoHub Project Descriptions
 
-| Number |              Name              |                                 URL                                  | VisAlgoHub Technique |
-| :----: | :----------------------------: | :------------------------------------------------------------------: | :------------------: |
-|   1    | String Reversal (Array/String) | [String Reversal Visual](https://vanillastringreversal.netlify.app/) |     Two Pointers     |
+| Number |      Name       |                                 URL                                  | VisAlgoHub Technique |     DSA      |
+| :----: | :-------------: | :------------------------------------------------------------------: | :------------------: | :----------: |
+|   1    | String Reversal | [String Reversal Visual](https://vanillastringreversal.netlify.app/) |     Two Pointers     | Array/String |
