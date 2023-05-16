@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./main.css">
+    <script src="./reverseString.js" defer></script>
+    <title>String Reversal | Coders Knowledge </title>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>String Reversal</h1>
+            <p class="description-text">
+            Write a function that reverses a string. The input string is given as an array of characters <code>sr</code>.
+            Modify the input array in-place with <code>O(1)</code> extra memory.
+            </p>
+        </div>
+    </header>
+
+    <main>
+        <section class="algo-container">
+            <div class="algo-content">
+                <h4>Input: <code id="input-code"></code></h4>
+                <h5>Output: <code id="output-code"></code></h5>
+                <p class="description-text">
+                    For each character being swapped, we are using <code>Two Pointers</code> approach. 
+                    We set a pointer to the <code>start</code> of the array and a pointer at the <code>end</code>
+                    of the array. </br> During each iteration, for each character, we will swap  <code>start</code> pointer character with 
+                    <code>end</code> pointer character. 
+                    </br> Once we're doing swapping the current characters, we increment <code>start</code> pointer 
+                    and decrement <code>end</code> pointer to move onto the next characters until we're finished.
+                </p>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
