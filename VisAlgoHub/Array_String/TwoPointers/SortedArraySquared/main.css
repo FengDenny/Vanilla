@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Mogra&family=Wix+Madefor+Display&display=swap');
+
+*{
+    box-sizing: border-box;
+    margin:0;
+    padding:0;
+}
+
+:root{
+    --header-font:'Mogra', cursive;
+    --description-font:'Wix Madefor Display', sans-serif;
+    --primary-color: #F1F6F9;
+    --header-color: #212A3E;
+    --description-color: #394867;
+    --descritpion-color-2: #9BA4B5;
+
+}
+
+body{
+    background: var(--primary-color);
+    font-family: var(--header-font);
+    color:var(--header-color);
+    font-size:calc(16px + 1vw);
+}
+
+code{
+    color:var(--description-color);
+    font-weight:bold;
+}
+
+.description-text{
+    color:var(--descritpion-color-2);
+    font-family: var(--description-font);
+    font-size:1rem;
+}
+
+
+
+header, 
+.algo-container{
+    display:flex;
+    justify-content: center;
+
+}
+
+.header-content{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    height:350px;
+    padding:10px;
+}   
+
+.header-content h1{
+    font-size:1.5em;
+}
+
+.header-content p{
+    width:100%;
+    max-width:550px;
+    line-height: 1.5rem;
+    margin-top:5px;
+}
+
+/* Algo */
+
+.algo-content h4, 
+.algo-content h5{
+    font-size:1em;
+}
+
+.algo-content h5{
+    margin-top:2.5rem;
+}
+
+.algo-content h4 > code, 
+.algo-content h5 > code{
+    font-size:0.8em;
+}
+
+.algo-content p{
+  width:100%;
+  max-width:550px;
+  margin-top:3rem;
+  line-height:2rem;
+}
+ 
+  @media screen and (max-width:797px) {
+    .header-content,
+    .algo-content h4, 
+    .algo-content h5{
+        text-align: center;
+    }
+
+    .algo-content p{
+      padding:10px;
+    }
+  }
