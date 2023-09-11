@@ -3,18 +3,17 @@ function switchTab(tabID){
     const tabs = document.querySelectorAll(".tab")
     const forms = document.querySelectorAll("form")
     const activeForm = document.getElementById(`${tabID}Form`)
-    const forgotPasswordTabHeader = document.getElementById("forgotPasswordTabHeader")
-
-    if(tabID === "forgotPasswordTab") forgotPasswordTabHeader.classList.remove("hidden")
-    else forgotPasswordTabHeader.classList.add("hidden")
+    const forgotPasswordTabHeader = document.getElementById("forgotPasswordTabHeader");
 
     tabs.forEach(tab => {
-        if(tab.getAttribute('data-tab') === tabID) tab.classList.add("active-tab");
-        else tab.classList.remove("active-tab");
+        tab.classList.toggle("active-tab", tab.getAttribute('data-tab') === tabID);
     })
 
     forms.forEach(form => form.classList.add("hidden"))
     activeForm.classList.remove("hidden")
+
+    forgotPasswordTabHeader.classList.toggle("hidden", tabID !== "forgotPasswordTab");
+
 }
 
 function tabClickHandler(){
@@ -23,27 +22,34 @@ function tabClickHandler(){
     const misclickTab = document.querySelector(".misclick-tab .tab");
     const signInTab = document.querySelector("[data-tab='signInTab']");
     const registerTab = document.querySelector("[data-tab='registerTab']");
-    tabContainer.addEventListener("click", (e) =>{
-        if(e.target.classList.contains("tab")){
-            const tabID = e.target.getAttribute('data-tab')
-            switchTab(tabID)
+
+    function handleToClick(id){
+        switch(id){
+            case "signInTab":
+                signInTab.classList.remove("hidden")
+                registerTab.classList.remove("hidden")
+                switchTab(id)
+                break;
+            case "forgotPasswordTab":
+                signInTab.classList.add("hidden")
+                registerTab.classList.add("hidden")
+                switchTab(id)
+                break;
+            default: 
+                switchTab(id)
+                break;
         }
-    })
+    }
 
-    forgotPasswordTab.addEventListener("click", (e) => {
-        const tabID = e.target.getAttribute('data-tab');
-        signInTab.classList.add("hidden")
-        registerTab.classList.add("hidden")
-        switchTab(tabID);
-    })
-
-    misclickTab.addEventListener("click", () => {
-        const tabID = misclickTab.getAttribute('data-tab');
-        signInTab.classList.remove("hidden");
-        registerTab.classList.remove("hidden")
-        switchTab(tabID);
-    });
-
+    function addListenerEvent(element){
+        element.addEventListener("click", (e) => {
+            const id = e.target.getAttribute("data-tab")
+            handleToClick(id)
+        })
+    }
+    addListenerEvent(tabContainer)
+    addListenerEvent(misclickTab)
+    addListenerEvent(forgotPasswordTab)
 }
 
 switchTab('signInTab');
