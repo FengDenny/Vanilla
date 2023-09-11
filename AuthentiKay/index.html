@@ -52,7 +52,7 @@
                     <div class="tabs">
                         <div class="tab-container">
                             <div class="tab" data-tab="signInTab">Sign In</div>
-                            <div class="tab" data-tab="registerTab">Register</div>
+                            <div class="tab" data-tab="registerTab" >Register</div>
                         </div>
                         <div id="forgotPasswordTabHeader">
                             <h2>Forgot password?</h2>
@@ -61,7 +61,7 @@
                         </div>
                         <div class="horizontal-line"></div>
                         <div class="form-container">
-                            <form id="signInTabForm">
+                            <form id="signInTabForm" data-test="signInForm">
                                 <div class="form-email">
                                     <label for="signInEmail">Email</label>
                                     <input name="signInEmail" type="email" id="signInEmail" />
@@ -78,7 +78,7 @@
                                     <button>Sign In</button>
                                 </div>
                             </form>
-                            <form id="registerTabForm">
+                            <form id="registerTabForm" data-test="registerForm">
                                 <div class="form-email">
                                     <label for="registerEmail">Email</label>
                                     <input name="registerEmail" type="email" id="registerEmail" />
@@ -91,7 +91,7 @@
                                     <button>Register</button>
                                 </div>
                             </form>
-                            <form id="forgotPasswordTabForm">
+                            <form id="forgotPasswordTabForm" data-test="forgotPasswordForm">
                                 <div class="form-email">
                                     <label for="forgotPasswordEmail">Email</label>
                                     <input name="forgotPasswordEmail" type="email" id="forgotPasswordEmail" />
@@ -101,7 +101,7 @@
                                 </div>
                                 <div class="misclick-tab">
                                     <h4>Misclick?</h4>
-                                    <div class="tab" data-tab="signInTab">Sign In</div>
+                                    <div class="tab" data-tab="signInTab" data-test="backToSignIn">Sign In</div>
                                 </div>
                             </form>
                         </div>
