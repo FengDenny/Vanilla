@@ -1,0 +1,331 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&family=Righteous&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin:0;
+    padding:0
+}
+
+:root{
+    --righteous: 'Righteous', cursive;
+    --comfortaa: 'Comfortaa', cursive;
+    --lightBlk: #252323;
+    --lightBlack64:rgba(37, 35, 35, 0.64);
+    --lightGray: rgba(37, 35, 35, 0.15);
+    --lightBlkBoxShadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    --white: #fff;
+    --white72: rgba(255, 255, 255, 0.72);
+    --golden: #E59500;
+    --golden93: rgba(229, 149, 0, 0.93);
+}
+
+body{
+    background-color: var(--lightBlk);  
+    font-family: var(--comfortaa);
+}
+
+ul{
+    list-style: none;
+}
+
+ul > li > a{
+    text-decoration: none;
+    color:#fff;
+    transition: color 0.3s ease-in, text-decoration 0.3s ease-in;
+}
+
+ul > li > a:hover{
+    text-decoration: underline;
+    color: var(--golden93);
+
+}
+main{
+    margin-top:2rem;
+}
+
+
+/* Container */
+.container{
+    max-width:1400px;
+    width:100%;
+    margin:0 auto;
+}
+
+/* Navbar */
+.navbar{
+    background-color: var(--lightBlk);
+    box-shadow: var(--lightBlkBoxShadow);
+    height: auto;
+}
+
+.nav-container{
+    display:flex;
+    justify-content: space-between;
+    padding: 1.5rem 0;
+    align-items: center;
+}
+
+.navbar-logo{
+    font-family: var(--righteous);
+    color:var(--golden);
+    font-weight:bold;
+    font-size:2.5rem;
+}
+
+.navbar-content{
+    display: flex;
+    align-items: center;
+}
+
+.left-content{
+    padding-left:1rem;
+}
+
+.right-content{
+    padding-right:1rem;
+}
+.left-content,
+.right-content{
+    font-weight: 200;
+    font-size:0.7rem;
+}
+
+/* Hero */
+
+.hero-content{
+    display: flex;
+    flex-direction: column;
+    margin-top:10rem; 
+    width:560px;
+    max-width:100%;
+    padding: 0 5px;
+
+}
+
+.hero-content-description h2{
+    color:var(--golden);
+    font-weight:bold;
+    font-size: 2.4rem;
+    line-height:3rem;
+}
+
+.hero-content-description h6{
+    padding-top:0.5rem;
+    font-size:1rem;
+    color: var(--white72)
+}
+
+.hero-content-description h2, 
+.hero-content-description h6{
+    max-width: 100%;
+    width:562px;
+}
+
+.hero-card-container{
+    background-color: var(--golden93);
+    margin-top:10px;
+    width:480px;
+    max-width: 100%;
+    height:auto;
+    padding:10px;
+    border-radius:5px;
+}
+
+/* Tab */
+
+.tabs{
+    width:350px;
+    max-width:100%;
+    margin:0 auto;
+}
+
+.horizontal-line {
+    border-top: 1px solid var(--lightGray); 
+    margin-top: 2px; 
+}
+.active-tab {
+    position: relative;
+    color: var(--white);
+    z-index:1;
+}
+
+.tab.active-tab::before {
+    content: "";
+    position: absolute;
+    top: 20px; 
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--white72);
+    transform-origin: left;
+    transform: scaleX(0); 
+    animation: slideUnderline 0.3s ease forwards; 
+}
+
+.hidden {
+    display: none;
+}
+
+.tab-container{
+    display:flex;
+    justify-content: space-between;
+    margin-top:15px;
+}
+
+.tab-container [data-tab="signInTab"], 
+.tab-container [data-tab="registerTab"] {
+    flex-grow:1;
+}
+
+
+.tab, 
+.forgot-password-tab {
+    cursor: pointer;
+    position: relative; 
+}
+
+
+
+#forgotPasswordTabHeader h2{
+    color:var(--lightBlk);
+    font-weight:bold;
+    text-align: center;
+    font-size:1.5rem;
+}
+
+#forgotPasswordTabHeader p{
+
+    color:var(--lightBlack64);
+    font-weight:200;
+    font-size:0.9rem;
+    width:900px;
+    max-width: 100%;
+    margin:5px 0;
+}
+
+.form-container{
+    margin-top:10px;
+}
+
+.form-email, 
+.form-password{
+    display: flex;
+    flex-direction: column;
+    margin-top:10px;
+    color:var(--lightBlk)
+}
+
+.form-email label, 
+.form-password label{
+    padding-bottom:3px;
+    font-size: 0.9rem;
+    font-weight:bold;
+}
+
+
+.form-email input, .form-password input{
+    background-color: transparent;
+    border:2px solid var(--lightBlack64);
+    border-radius:5px;
+    height: 43px;
+}
+
+.signInBtn, 
+.registerBtn, 
+.sendBtn{
+    margin:10px 0;
+}
+
+.signInBtn button, 
+.registerBtn button, 
+.sendBtn button{
+    cursor: pointer;
+    width:100%;
+    background-color: var(--lightBlk);
+    border:transparent;
+    border-radius:5px;
+    color:var(--white);
+    font-weight:bold;
+    height:43px;
+    box-shadow: var(--lightBlkBoxShadow);
+}
+
+
+.form-password-between{
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-password-between .forgot-password-tab{
+    font-size:0.8rem;
+    color:var(--lightBlack64)
+}
+
+.form-password-between .forgot-password-tab:hover{
+    text-decoration: underline;
+}
+
+.misclick-tab{
+ display: flex;
+ margin-top:10px;
+ justify-content: center;
+}
+
+.misclick-tab h4{
+    color: var(--lightBlack64);
+    font-size:0.9rem
+}
+
+.misclick-tab .tab{
+    padding-left:5px;
+    font-size:0.9rem;
+    color: var(--white72)
+}
+
+.misclick-tab .tab:hover{
+    text-decoration: underline;
+}
+
+/* Animation keyframes */
+@keyframes slideUnderline {
+    0% {
+        transform: scaleX(0);
+    }
+    100% {
+        transform: scaleX(1);
+    }
+}
+
+/* Media Queries */
+@media screen and (max-width: 900px) {
+    .nav-container{
+        flex-direction: column;
+    }
+    .navbar-logo{
+        order:-1;
+        margin-bottom:1.5rem;
+    }
+    .left-content, 
+    .right-content{
+        margin:5px 0;
+        padding:0;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .navbar-logo{
+       font-size:1.9rem;
+    }
+
+    .hero-content-description h2{
+        font-size: 1.2rem;
+        line-height:2rem;
+    }
+
+    .hero-content-description h6{
+        font-size: 0.8rem;
+    }
+}
+
+
