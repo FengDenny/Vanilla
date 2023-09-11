@@ -350,7 +350,7 @@ main{
     .nav-container{
         flex-direction: column;
     }
-    .navbar-logo{
+    .mid-content{
         order:-1;
         margin-bottom:1.5rem;
     }
