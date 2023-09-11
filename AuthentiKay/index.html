@@ -11,19 +11,31 @@
 
 <body>
     <div class="navbar">
-        <div class ="nav-container container">
+        <div class="nav-container container">
             <nav class="left-content">
                 <ul>
                     <li>
-                        <a href="/"><h2>Docs</h2></a>
+                        <a href="docs.html">
+                            <h2>Docs</h2>
+                        </a>
                     </li>
                 </ul>
             </nav>
-            <h1 class="navbar-logo">AuthentiKay</h1>
+            <nav class ="mid-content">
+                <ul>
+                    <li>
+                        <a href="/">
+                            <h1 class="navbar-logo">AuthentiKay</h1>
+                            </a>
+                    </li>
+                </ul>
+            </nav>
             <nav class="right-content">
                 <ul>
                     <li>
-                        <a href="/"> <h2>Contact</h2></a>
+                        <a href="/">
+                            <h2>Contact</h2>
+                        </a>
                     </li>
                 </ul>
             </nav>
@@ -39,26 +51,28 @@
                 <div class="hero-card-container">
                     <div class="tabs">
                         <div class="tab-container">
-                         <div class ="tab" data-tab="signInTab">Sign In</div>
-                         <div class ="tab" data-tab="registerTab">Register</div>
+                            <div class="tab" data-tab="signInTab">Sign In</div>
+                            <div class="tab" data-tab="registerTab">Register</div>
                         </div>
                         <div id="forgotPasswordTabHeader">
-                          <h2>Forgot password?</h2>
-                          <p>Please provide your email address, and we will send you a link to initiate the password reset process.</h6>
+                            <h2>Forgot password?</h2>
+                            <p>Please provide your email address, and we will send you a link to initiate the password
+                                reset process.</h6>
                         </div>
                         <div class="horizontal-line"></div>
                         <div class="form-container">
                             <form id="signInTabForm">
                                 <div class="form-email">
                                     <label for="signInEmail">Email</label>
-                                    <input name="signInEmail" type="email" id="signInEmail"/>
+                                    <input name="signInEmail" type="email" id="signInEmail" />
                                 </div>
                                 <div class="form-password">
                                     <div class="form-password-between">
                                         <label for="signInPassword">Password</label>
-                                        <label for="signInPassword" class="forgot-password-tab" data-tab="forgotPasswordTab">Forgot password?</label>
+                                        <label for="signInPassword" class="forgot-password-tab"
+                                            data-tab="forgotPasswordTab">Forgot password?</label>
                                     </div>
-                                    <input name="signInPassword" type="password" id="signInPassword"/>
+                                    <input name="signInPassword" type="password" id="signInPassword" />
                                 </div>
                                 <div class="signInBtn">
                                     <button>Sign In</button>
@@ -67,11 +81,11 @@
                             <form id="registerTabForm">
                                 <div class="form-email">
                                     <label for="registerEmail">Email</label>
-                                    <input name="registerEmail" type="email" id="registerEmail"/>
+                                    <input name="registerEmail" type="email" id="registerEmail" />
                                 </div>
                                 <div class="form-password">
                                     <label for="registerPassword">Password</label>
-                                    <input name="registerPassword" type="password" id="registerPassword"/>
+                                    <input name="registerPassword" type="password" id="registerPassword" />
                                 </div>
                                 <div class="registerBtn">
                                     <button>Register</button>
@@ -86,14 +100,15 @@
                                     <button>Send</button>
                                 </div>
                                 <div class="misclick-tab">
-                                    <h4>Misclick?</h4> <div class="tab" data-tab="signInTab">Sign In</div>
+                                    <h4>Misclick?</h4>
+                                    <div class="tab" data-tab="signInTab">Sign In</div>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-           
+
         </section>
     </main>
 </body>
