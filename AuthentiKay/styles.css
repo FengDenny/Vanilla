@@ -90,12 +90,16 @@ main{
     font-size:0.7rem;
 }
 
+.mid-content ul > li > a:hover{
+    text-decoration: none;
+}
+
 /* Hero */
 
 .hero-content{
     display: flex;
     flex-direction: column;
-    margin-top:10rem; 
+    margin-top:6rem; 
     width:560px;
     max-width:100%;
     padding: 0 5px;
@@ -268,7 +272,7 @@ main{
 
 .misclick-tab{
  display: flex;
- margin-top:10px;
+ margin-top:25px;
  justify-content: center;
 }
 
@@ -287,6 +291,23 @@ main{
     text-decoration: underline;
 }
 
+
+/* Tab Animations  */
+
+#forgotPasswordTabForm .form-email {
+    animation: fadeInDown 1s ease forwards;
+}
+
+#forgotPasswordTabForm .sendBtn,
+#signInTabForm .signInBtn,
+#signInTabForm .form-email,
+#registerTabForm .form-email,
+#registerTabForm .registerBtn{
+       animation: fadeInUp 1s ease forwards;
+}
+
+ 
+
 /* Animation keyframes */
 @keyframes slideUnderline {
     0% {
@@ -296,6 +317,33 @@ main{
         transform: scaleX(1);
     }
 }
+
+@keyframes fadeInDown {
+    from {
+        max-height:0;
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        max-height:100px;
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        max-height: 0;
+        opacity: 0;
+        transform: translateY(20px); 
+    }
+    100% {
+        max-height: 100px;
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 
 /* Media Queries */
 @media screen and (max-width: 900px) {
