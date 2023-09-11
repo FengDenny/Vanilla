@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./tab.js" defer></script>
+    <title>AuthentiKay | Step-by-Step Authentication Demo</title>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class ="nav-container container">
+            <nav class="left-content">
+                <ul>
+                    <li>
+                        <a href="/"><h2>Docs</h2></a>
+                    </li>
+                </ul>
+            </nav>
+            <h1 class="navbar-logo">AuthentiKay</h1>
+            <nav class="right-content">
+                <ul>
+                    <li>
+                        <a href="/"> <h2>Contact</h2></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <main>
+        <section>
+            <div class="hero-content container">
+                <div class="hero-content-description">
+                    <h2>Unlocking Authentication: Step-by-Step Demo</h2>
+                    <h6>Discover the inner workings of password authentication.</h6>
+                </div>
+                <div class="hero-card-container">
+                    <div class="tabs">
+                        <div class="tab-container">
+                         <div class ="tab" data-tab="signInTab">Sign In</div>
+                         <div class ="tab" data-tab="registerTab">Register</div>
+                        </div>
+                        <div id="forgotPasswordTabHeader">
+                          <h2>Forgot password?</h2>
+                          <p>Please provide your email address, and we will send you a link to initiate the password reset process.</h6>
+                        </div>
+                        <div class="horizontal-line"></div>
+                        <div class="form-container">
+                            <form id="signInTabForm">
+                                <div class="form-email">
+                                    <label for="signInEmail">Email</label>
+                                    <input name="signInEmail" type="email" id="signInEmail"/>
+                                </div>
+                                <div class="form-password">
+                                    <div class="form-password-between">
+                                        <label for="signInPassword">Password</label>
+                                        <label for="signInPassword" class="forgot-password-tab" data-tab="forgotPasswordTab">Forgot password?</label>
+                                    </div>
+                                    <input name="signInPassword" type="password" id="signInPassword"/>
+                                </div>
+                                <div class="signInBtn">
+                                    <button>Sign In</button>
+                                </div>
+                            </form>
+                            <form id="registerTabForm">
+                                <div class="form-email">
+                                    <label for="registerEmail">Email</label>
+                                    <input name="registerEmail" type="email" id="registerEmail"/>
+                                </div>
+                                <div class="form-password">
+                                    <label for="registerPassword">Password</label>
+                                    <input name="registerPassword" type="password" id="registerPassword"/>
+                                </div>
+                                <div class="registerBtn">
+                                    <button>Register</button>
+                                </div>
+                            </form>
+                            <form id="forgotPasswordTabForm">
+                                <div class="form-email">
+                                    <label for="forgotPasswordEmail">Email</label>
+                                    <input name="forgotPasswordEmail" type="email" id="forgotPasswordEmail" />
+                                </div>
+                                <div class="sendBtn">
+                                    <button>Send</button>
+                                </div>
+                                <div class="misclick-tab">
+                                    <h4>Misclick?</h4> <div class="tab" data-tab="signInTab">Sign In</div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </section>
+    </main>
+</body>
+
+</html>
