@@ -1,0 +1,15 @@
+{
+  "name": "authentikay",
+  "version": "1.0.0",
+  "description": "",
+  "main": "tab.js",
+  "scripts": {
+    "cypress:open": "cypress open"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^13.1.0"
+  }
+}
