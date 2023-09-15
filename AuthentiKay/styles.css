@@ -292,9 +292,44 @@ main{
 }
 
 
-/* Tab Animations  */
+#registerTabForm{
+    position: relative;
+}
 
-#forgotPasswordTabForm .form-email {
+.password-hint-container {
+    padding: 10px;
+    height: auto;
+    display: none;
+    font-size:0.9rem;
+}
+
+.password-hint-card {
+    padding: 10px;
+}
+
+.show-hint {
+    cursor: pointer;
+    color: var(--lightBlack64)
+}
+
+.show-hint:hover{
+    text-decoration: underline;
+}
+
+.show-password-container{
+    display:block;
+}
+
+.invalid-hint{
+    color:red
+}
+
+.valid-hint{
+    color:green
+}
+
+/*  Animations  */
+#forgotPasswordTabForm .form-email, .password-hint-container .password-hint-card {
     animation: fadeInDown 1s ease forwards;
 }
 
@@ -306,9 +341,23 @@ main{
        animation: fadeInUp 1s ease forwards;
 }
 
- 
+
+.slide-in {
+    animation: slideIn 0.5s forwards;
+    display: block;
+}
 
 /* Animation keyframes */
+
+@keyframes slideIn {
+    from {
+        right: 0;
+    }
+    to {
+        right: -5rem;
+    }
+}
+
 @keyframes slideUnderline {
     0% {
         transform: scaleX(0);
