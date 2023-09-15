@@ -5,7 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles.css">
+    <script src="https://www.gstatic.com/firebasejs/10.3.1/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/10.3.1/firebase-firestore-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/10.3.1/firebase-auth-compat.js" defer></script>
     <script src="./tab.js" defer></script>
+    <script src="./firebase.js" defer></script>
     <title>AuthentiKay | Step-by-Step Authentication Demo</title>
 </head>
 
@@ -75,20 +79,33 @@
                                     <input name="signInPassword" type="password" id="signInPassword" />
                                 </div>
                                 <div class="signInBtn">
-                                    <button>Sign In</button>
+                                    <button type="button" onclick="signIn()">Sign In</button>
                                 </div>
                             </form>
-                            <form id="registerTabForm" data-test="registerForm">
+                            <form method="post" id="registerTabForm" data-test="registerForm">
                                 <div class="form-email">
                                     <label for="registerEmail">Email</label>
                                     <input name="registerEmail" type="email" id="registerEmail" />
                                 </div>
                                 <div class="form-password">
-                                    <label for="registerPassword">Password</label>
+                                    <div class="form-password-between">
+                                        <label for="registerPassword">Password</label>
+                                        <label for ="registerPassword" class="show-hint">Show hint</label>
+                                    </div>
                                     <input name="registerPassword" type="password" id="registerPassword" />
                                 </div>
+                                <div class="password-hint-container">
+                                    <div class="password-hint-card">
+                                        <ul class ="hint-items">
+                                            <li class="hint-item">Between 6 and 30 characters</li>
+                                            <li class="hint-item">Contain at least one uppercase letter</li>
+                                            <li class="hint-item">Contain at least one lowercase letter</li>
+                                            <li class="hint-item">Contain at least one special character</li>
+                                        </ul>
+                                    </div>
+                                </div>
                                 <div class="registerBtn">
-                                    <button>Register</button>
+                                    <button type="button" onclick="register()">Register</button>
                                 </div>
                             </form>
                             <form id="forgotPasswordTabForm" data-test="forgotPasswordForm">
