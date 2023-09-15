@@ -52,5 +52,39 @@ function tabClickHandler(){
     addListenerEvent(forgotPasswordTab)
 }
 
+function showPasswordHint() {
+    const showHintLabel = document.querySelector('.show-hint');
+    const passwordHintContainer = document.querySelector('.password-hint-container');
+    const hintItemsContainer = document.querySelector('.hint-items'); // Parent container for hint items
+    const hintRegex = [
+      /^.{6,30}$/, // Between 6 and 30 characters
+      /[A-Z]/,     // Contain at least one uppercase letter
+      /[a-z]/,     // Contain at least one lowercase letter
+      /[!@#$%^&*()_+{}[\]:;<>,.?~]/, // Contain at least one special character
+    ];
+  
+    function updateHintClasses() {
+      const password = document.getElementById('registerPassword').value;
+      hintItemsContainer.querySelectorAll('.hint-item').forEach((hintItem, index) => {
+        const requirementsMet = hintRegex[index].test(password);
+        hintItem.classList.toggle('invalid-hint', !requirementsMet);
+        hintItem.classList.toggle('valid-hint', requirementsMet);
+      });
+    }
+  
+    showHintLabel.addEventListener('click', () => {
+      passwordHintContainer.classList.toggle('show-password-container');
+      if (passwordHintContainer.classList.contains('show-password-container')) {
+        updateHintClasses(); 
+        document.getElementById('registerPassword').addEventListener('input', updateHintClasses);
+      } else {
+        document.getElementById('registerPassword').removeEventListener('input', updateHintClasses);
+      }
+    });
+  }
+  
+
+
 switchTab('signInTab');
 tabClickHandler()
+showPasswordHint()
