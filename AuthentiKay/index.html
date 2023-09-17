@@ -80,7 +80,7 @@
                                     <input name="signInPassword" type="password" id="signInPassword" />
                                 </div>
                                 <div class="signInBtn">
-                                    <button type="button" onclick="signIn()">Sign In</button>
+                                    <button type="submit" id="signInBtn">Sign In</button>
                                 </div>
                             </form>
                             <form method="post" id="registerTabForm" data-test="registerForm">
@@ -97,7 +97,7 @@
                                 </div>
                                 <div class="password-hint-container">
                                     <div class="password-hint-card">
-                                        <ul class ="hint-items">
+                                        <ul class ="hint-items" data-test="test-hint-items">
                                             <li > <i class="fas fa-check hint-item" data-test="test-hint-characters"></i>  Between 6 and 30 characters</li>
                                             <li> <i class="fas fa-check hint-item" data-test="test-hint-uppercase"></i> Contain at least one uppercase letter</li>
                                             <li> <i class="fas fa-check hint-item" data-test="test-hint-lowercase"></i> Contain at least one lowercase letter</li>
@@ -106,16 +106,16 @@
                                     </div>
                                 </div>
                                 <div class="registerBtn">
-                                    <button type="button" onclick="register()">Register</button>
+                                    <button type="submit" id="resisterBtn">Register</button>
                                 </div>
                             </form>
                             <form id="forgotPasswordTabForm" data-test="forgotPasswordForm">
                                 <div class="form-email">
                                     <label for="forgotPasswordEmail">Email</label>
-                                    <input name="forgotPasswordEmail" type="email" id="forgotPasswordEmail" />
+                                    <input name="forgotPasswordEmail" type="email" id="forgotPasswordEmail" data-test ="test-forgot-password" />
                                 </div>
                                 <div class="sendBtn">
-                                    <button>Send</button>
+                                    <button type="submit" id="passwordRecoveryBtn" test-data= "password-recovery-button">Send</button>
                                 </div>
                                 <div class="misclick-tab">
                                     <h4>Misclick?</h4>
