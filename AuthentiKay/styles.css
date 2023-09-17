@@ -303,8 +303,8 @@ main{
     font-size:0.9rem;
 }
 
-.password-hint-card {
-    padding: 10px;
+.password-hint-card > ul > li{
+    color:var(--white72)
 }
 
 .show-hint {
