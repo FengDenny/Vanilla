@@ -1,4 +1,8 @@
 
+switchTab('signInTab');
+tabClickHandler()
+showPasswordHint()
+
 function switchTab(tabID){
     const tabs = document.querySelectorAll(".tab")
     const forms = document.querySelectorAll("form")
@@ -56,6 +60,7 @@ function showPasswordHint() {
     const showHintLabel = document.querySelector('.show-hint');
     const passwordHintContainer = document.querySelector('.password-hint-container');
     const hintItemsContainer = document.querySelector('.hint-items'); // Parent container for hint items
+    const registerBtn = document.getElementById("resisterBtn")
     const hintRegex = [
       /^.{6,30}$/, // Between 6 and 30 characters
       /[A-Z]/,     // Contain at least one uppercase letter
@@ -71,7 +76,7 @@ function showPasswordHint() {
         hintItem.classList.toggle('valid-hint', requirementsMet);
       });
     }
-  
+
     showHintLabel.addEventListener('click', () => {
       passwordHintContainer.classList.toggle('show-password-container');
       if (passwordHintContainer.classList.contains('show-password-container')) {
@@ -81,10 +86,14 @@ function showPasswordHint() {
         document.getElementById('registerPassword').removeEventListener('input', updateHintClasses);
       }
     });
+
+    registerBtn.addEventListener("click", () => {
+      hintItemsContainer.querySelectorAll(".hint-item").forEach(hintItem => {
+        hintItem.classList.remove("valid-hint")
+        hintItem.classList.add("invalid-hint")
+      })
+    })
   }
   
 
 
-switchTab('signInTab');
-tabClickHandler()
-showPasswordHint()
