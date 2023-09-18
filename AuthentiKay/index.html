@@ -69,7 +69,7 @@
                             <form id="signInTabForm" data-test="signInForm">
                                 <div class="form-email">
                                     <label for="signInEmail">Email</label>
-                                    <input name="signInEmail" type="email" id="signInEmail" />
+                                    <input name="signInEmail" type="email" id="signInEmail" data-test="test-signIn-email-input"/>
                                 </div>
                                 <div class="form-password">
                                     <div class="form-password-between">
@@ -77,16 +77,16 @@
                                         <label for="signInPassword" class="forgot-password-tab"
                                             data-tab="forgotPasswordTab">Forgot password?</label>
                                     </div>
-                                    <input name="signInPassword" type="password" id="signInPassword" />
+                                    <input name="signInPassword" type="password" id="signInPassword" data-test="test-signIn-password-input"/>
                                 </div>
                                 <div class="signInBtn">
-                                    <button type="submit" id="signInBtn">Sign In</button>
+                                    <button type="submit" id="signInBtn" data-test="signIn-btn">Sign In</button>
                                 </div>
                             </form>
                             <form method="post" id="registerTabForm" data-test="registerForm">
                                 <div class="form-email">
                                     <label for="registerEmail">Email</label>
-                                    <input name="registerEmail" type="email" id="registerEmail" />
+                                    <input name="registerEmail" type="email" id="registerEmail" data-test="test-email-input" />
                                 </div>
                                 <div class="form-password">
                                     <div class="form-password-between">
@@ -106,7 +106,7 @@
                                     </div>
                                 </div>
                                 <div class="registerBtn">
-                                    <button type="submit" id="resisterBtn">Register</button>
+                                    <button type="submit" id="registerBtn" data-test ="register-btn">Register</button>
                                 </div>
                             </form>
                             <form id="forgotPasswordTabForm" data-test="forgotPasswordForm">
