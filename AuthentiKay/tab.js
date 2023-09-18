@@ -60,7 +60,7 @@ function showPasswordHint() {
     const showHintLabel = document.querySelector('.show-hint');
     const passwordHintContainer = document.querySelector('.password-hint-container');
     const hintItemsContainer = document.querySelector('.hint-items'); // Parent container for hint items
-    const registerBtn = document.getElementById("resisterBtn")
+    const registerBtn = document.getElementById("registerBtn")
     const hintRegex = [
       /^.{6,30}$/, // Between 6 and 30 characters
       /[A-Z]/,     // Contain at least one uppercase letter
