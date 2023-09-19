@@ -14,6 +14,8 @@ const auth = firebaseApp.auth();
 register();
 signIn();
 resetPassword();
+
+
 function register() {
   const registerEmail = document.getElementById("registerEmail");
   const registerPassword = document.getElementById("registerPassword");
@@ -35,13 +37,17 @@ function register() {
         );
         const { email, uid, metadata } = result.user;
         const { creationTime, lastSignInTime } = metadata;
+        const displayName = email.split("@").shift()
         const data = {
-          displayName: email.split("@").shift(),
+          displayName, 
           email,
           uid,
           metadata: { creationTime, lastSignInTime },
         };
+        await updateUserProfile(result.user, {email,  displayName });
         await saveData(data);
+        localStorage.setItem("data", JSON.stringify(data));
+        console.log(result.user)
         console.log(`${email} has successfully signed up`);
       } catch (error) {
         errorCodeLookUp(error);
@@ -64,11 +70,23 @@ function signIn() {
         signInEmail.value,
         signInPassword.value
       );
-      console.log(result.user);
-      const { email } = result.user;
-      if (result.user) console.log(`Welcome back, ${email}!`);
+        
+      // Store user data in localStorage after sign-in
+      const { email, uid, metadata } = result.user;
+      const { creationTime, lastSignInTime } = metadata;
+      const userData = {
+        displayName: email.split("@").shift(),
+        email,
+        uid,
+        metadata: { creationTime, lastSignInTime },
+      };
+
+      // Store user data in localStorage
+      localStorage.setItem("data", JSON.stringify(userData));
+
       signInEmail.value = "";
       signInPassword.value = "";
+      window.location.href = "dashboard.html";
     } catch (error) {
       e.preventDefault();
       errorCodeLookUp(error);
@@ -103,6 +121,20 @@ function resetPassword() {
       resetPasswordInputEmail.value = "";
     }
   });
+}
+
+function logout() {
+  localStorage.removeItem("data");
+  auth
+    .signOut()
+    .then(() => {
+      console.log("User signed out");
+      window.location.href = "/"; 
+    })
+    .catch((error) => {
+      // An error occurred during sign-out.
+      console.error("Error signing out:", error);
+    });
 }
 
 async function saveData(data) {
@@ -159,3 +191,6 @@ function isValidPassword(password) {
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}[\]:;<>,.?~]).{6,30}$/;
   return passwordRegex.test(password);
 }
+
+
+
