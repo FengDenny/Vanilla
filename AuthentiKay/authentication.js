@@ -46,7 +46,6 @@ function register() {
         };
         await updateUserProfile(result.user, {email,  displayName });
         await saveData(data);
-        localStorage.setItem("data", JSON.stringify(data));
         console.log(result.user)
         console.log(`${email} has successfully signed up`);
       } catch (error) {
@@ -66,24 +65,11 @@ function signIn() {
   signInForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     try {
-      const result = await auth.signInWithEmailAndPassword(
+     await auth.signInWithEmailAndPassword(
         signInEmail.value,
         signInPassword.value
       );
-        
-      // Store user data in localStorage after sign-in
-      const { email, uid, metadata } = result.user;
-      const { creationTime, lastSignInTime } = metadata;
-      const userData = {
-        displayName: email.split("@").shift(),
-        email,
-        uid,
-        metadata: { creationTime, lastSignInTime },
-      };
-
-      // Store user data in localStorage
-      localStorage.setItem("data", JSON.stringify(userData));
-
+  
       signInEmail.value = "";
       signInPassword.value = "";
       window.location.href = "dashboard.html";
@@ -124,7 +110,6 @@ function resetPassword() {
 }
 
 function logout() {
-  localStorage.removeItem("data");
   auth
     .signOut()
     .then(() => {
@@ -194,3 +179,12 @@ function isValidPassword(password) {
 
 
 
+function checkLoggedInStatus(user){
+  if(user){    
+    window.location.href="dashboard.html"
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    auth.onAuthStateChanged(checkLoggedInStatus);
+});
