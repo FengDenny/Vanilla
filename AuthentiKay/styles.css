@@ -393,10 +393,20 @@ main{
 }
 
 .activity .monthly-heading{
+    display:flex;
     position: absolute;
     top:2.5rem;
-    color:var(--white)
+    color:var(--white);
 }
+
+.activity .monthly-heading .hyphen,
+.activity .monthly-heading .changes-number, 
+.activity .monthly-heading .changes-title{
+    padding-left:3px;
+}
+
+
+
 .activity .activity-heading > h4:nth-child(1){
    text-decoration: underline;
 }
