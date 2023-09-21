@@ -15,6 +15,7 @@
     --lightBlkBoxShadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
     --white: #fff;
     --white72: rgba(255, 255, 255, 0.72);
+    --white50: rgba(255, 255, 255, 0.50);
     --golden: #E59500;
     --golden93: rgba(229, 149, 0, 0.93);
 }
@@ -88,6 +89,14 @@ main{
 .right-content{
     font-weight: 200;
     font-size:0.7rem;
+}
+
+.right-content-ul{
+    display:flex;
+}
+
+.right-content-ul > li{
+    padding-left: 1rem;
 }
 
 .mid-content ul > li > a:hover{
@@ -328,6 +337,126 @@ main{
     color:green
 }
 
+/* Dashboard */
+.userDisplayNameHeading{
+    color:var(--white72);
+    margin-top:2px;
+    font-size:0.9rem;
+}
+
+#userDisplayName{
+    color:var(--golden)
+}
+
+.dashboard{
+    display: flex;
+    gap:10%;
+}
+
+#dashboard-tabs{
+    background:var(--golden);
+    width:250px;
+    max-width:100%;
+    height:500px;
+    padding:10px;
+    display:flex;
+    flex-direction: column;
+    border-radius:5px;
+}
+
+
+
+#dashboard-tabs > div{
+    margin-top:10px;
+    padding:10px;
+    cursor: pointer;
+}
+
+#dashboard-tabs > div:hover{
+    background:var(--white72);
+    color:var(--lightBlack);
+    border-radius:10px
+
+}
+
+.activity{
+    color:var(--white72);
+    flex-grow:2;
+    position: relative;
+}
+
+
+.activity .activity-heading{
+    display:flex;
+    justify-content: space-between;
+    color:var(--white)
+}
+
+.activity .monthly-heading{
+    position: absolute;
+    top:2.5rem;
+    color:var(--white)
+}
+.activity .activity-heading > h4:nth-child(1){
+   text-decoration: underline;
+}
+
+.activity .activity-heading > h4:nth-child(1),
+.activity .activity-heading > h4:nth-child(2){
+    font-weight: 200;
+ }
+
+.activity .activity-heading #last-sign-in{
+    color:var(--white72)
+}
+
+
+.activity-table{
+    margin-top:3rem;
+}
+
+.activity-table > table{
+    width:100%;
+    max-width: 100%;
+    border-collapse: collapse;
+}
+
+
+.activity-table .table-heading {
+    border-top: 1px solid var(--white50); 
+}
+
+.activity-table .table-heading  th {
+    text-align: left; 
+    color:var(--white72);
+    /* top | right | bottom | left */
+    padding: 10px 0 10px 10px;
+}
+
+.activity-table >table > tbody > tr{
+    display: table-row;
+    border-bottom: 1px solid var(--white50);
+}
+
+.activity-table > table > tbody > tr > td {
+    text-align: left; 
+    padding: 10px;
+}
+
+.changes-title, .hyphen{
+    font-weight: 200;
+    color:var(--white72)
+}
+
+.column-data{
+    color:var(--golden);
+    font-size:0.9rem;
+}
+
+.column-data #updated-column{
+    font-weight: bold;
+}
+
 /*  Animations  */
 #forgotPasswordTabForm .form-email, .password-hint-container .password-hint-card {
     animation: fadeInDown 1s ease forwards;
@@ -403,10 +532,22 @@ main{
         order:-1;
         margin-bottom:0.5rem;
     }
-    .left-content, 
+    .left-content{
+        /* top | right | bottom | left */
+        margin:10px 54px 10px 0; 
+    }
     .right-content{
         margin:5px 0;
         padding:0;
+    }
+
+    .right-content-ul{
+      flex-direction: column;
+      /* padding-left:2.5rem; */
+    }
+
+    .userDisplayNameHeading{
+        margin-top:0.8rem;
     }
 }
 
