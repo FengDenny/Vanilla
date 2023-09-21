@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles.css">
+    <script src="https://www.gstatic.com/firebasejs/10.3.1/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/10.3.1/firebase-firestore-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/10.3.1/firebase-auth-compat.js" defer></script>
+    <script src="./dashboard.js" defer></script>
+
+    <title>Dashboard</title>
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-container container">
+            <nav class="left-content">
+                <ul>
+                    <li>
+                        <a href="docs.html">
+                            <h2>Docs</h2>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <nav class ="mid-content">
+                <ul>
+                    <li>
+                        <a href="/">
+                            <h1 class="navbar-logo">AuthentiKay</h1>
+                            </a>
+                    </li>
+                </ul>
+            </nav>
+            <nav class="right-content">
+                <ul class="right-content-ul">
+                    <li>
+                        <a href="/">
+                            <h2>Contact</h2>
+                        </a>
+                    </li>
+                    <li>
+                       <h4 class="userDisplayNameHeading">Welcome, <span id="userDisplayName" class="hidden" data-test="display-name"></span></h4>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <main>
+        <section class="container dashboard">
+            <div id="dashboard-tabs" data-test="dashboard-tabs">
+                <div data-tab="activity-tab"> Activity</div>
+                <div data-tab="account-settings-tab"> Account Settings </div>
+            </div>  
+            <div class="activity">
+                <div class="activity-heading">
+                    <h4>Activity log</h2>
+                    <h4>Last sign in: <span id="last-sign-in"></span></h2>
+                </div>
+                <div class="monthly-heading">
+                    <h4 id="month">This month <span class="hyphen">-</span> 
+                        <span id="changes-number"> 3 <span class="changes-title">Changes</span></span>
+                    </h4>
+                </div>
+                <div class="activity-table">
+                    <table>
+                      <tbody>
+                        <tr class="table-heading">
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Current</th>
+                            <th>Updated</th>
+                          </tr>
+                          <tr class="column-data">
+                            <td id="date-column">9/19</td>
+                            <td id="description-column">Email updated</td>
+                            <td id="current-column">test@ex.com</td>
+                            <td id="updated-column">test@example.com</td>
+                          </tr>
+                      </tbody>
+                      </table>
+                </div>
+            </div>
+        </section>
+      
+    </main>
+</body>
+</html>
