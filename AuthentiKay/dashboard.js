@@ -10,12 +10,14 @@ const firebaseApp = firebase.initializeApp({
   
   const db = firebaseApp.firestore();
   const auth = firebaseApp.auth();
+  let previousUser = null
 
-  
   document.addEventListener("DOMContentLoaded", () => {
     auth.onAuthStateChanged((user) => {
       displayUserData(user)
       displayLastSignInStatus(user)
+      displayMonthlyChanges(user)
+      listenToUserProfileChanges(user.uid)
     });
   });
 
@@ -26,10 +28,62 @@ const firebaseApp = firebase.initializeApp({
       const {lastLoginAt} = user.metadata
       lastSignIn.textContent = convertTimeStamp(lastLoginAt)
     }
-
   }
-  
-  // You can retrieve and display user data from localStorage
+
+  function displayMonthlyChanges(user){
+    const monthHeading = document.getElementById('month')
+    if(user){
+      const {lastLoginAt} = user.metadata
+      const getDate = dateExtraction(convertTimeStamp(lastLoginAt))
+     const {currentDate, dateMonth, dateYear} = getDate
+       // Format the month for display (add 1 to account for 0-indexed months)
+       const formattedDateMonth = new Intl.DateTimeFormat('en-US', {
+        month: 'long',
+      }).format(new Date(dateYear, dateMonth, 1));
+      if(
+        currentDate.getMonth() === dateMonth && 
+        currentDate.getFullYear() === dateYear
+      ){
+        monthHeading.textContent = "This month"
+      }else{
+        monthHeading.textContent = `${formattedDateMonth} ${dateYear}`;
+      }
+    }
+    
+  }
+
+// Firestore listener to track changes in user profile
+function listenToUserProfileChanges(userId) {
+  const usersRef = db.collection("users");
+  const query = usersRef.where("uid", "==", userId);
+  const changesNumberElement = document.getElementById('changes-number');
+  const changesTitleElement = document.getElementById('changes-title');
+
+  query.get().then((querySnapshot) => {
+    if (!querySnapshot.empty) {
+      // Get the first document from the query (there should be only one)
+      const doc = querySnapshot.docs[0];
+      const userData = doc.data();
+      // Compare the new data with the previous user data
+      if (previousUser) {
+        let changeCount = 0;
+        for (const field in userData) {
+          if (userData[field] !== previousUser[field])  changeCount++;
+          
+        }
+        changesNumberElement.textContent = changeCount;
+        changesTitleElement.textContent = changeCount === 1 ? 'Change' : 'Changes';
+      } else {
+        changesNumberElement.textContent = 0;
+        changesTitleElement.textContent = 'Change';
+      }
+
+      // Update the previousUser reference
+      previousUser = { ...userData };
+    }
+  });
+}
+
 function displayUserData(user) {
     const userDisplayNameElement = document.getElementById("userDisplayName")
     if(user){
@@ -48,5 +102,13 @@ function displayUserData(user) {
     const timestamp = parseInt(string, 10)
     const date = new Date(timestamp)
     return date.toLocaleString()
+  }
+
+  function dateExtraction(date){
+    const currentDate = new Date()
+    const dataDate = new Date(date)
+    const dateMonth = dataDate.getMonth()
+    const dateYear = dataDate.getFullYear()
+    return {currentDate, dateMonth, dateYear}
   }
   
