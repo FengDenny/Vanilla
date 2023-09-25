@@ -49,10 +49,10 @@
     <main>
         <section class="container dashboard">
             <div id="dashboard-tabs" data-test="dashboard-tabs">
-                <div data-tab="activity-tab"> Activity</div>
-                <div data-tab="account-settings-tab"> Account Settings </div>
+                <div class="dashTab" data-tab="activityTab"> Activity</div>
+                <div class="dashTab" data-tab="settingsTab"> Account Settings </div>
             </div>  
-            <div class="activity">
+            <div id="activityTabDashboard" class="dashboard-content activity">
                 <div class="activity-heading">
                     <h4>Activity log</h2>
                     <h4>Last sign in: <span id="last-sign-in"></span></h2>
@@ -81,6 +81,52 @@
                       </tbody>
                       </table>
                 </div>
+            </div>
+            <div id="settingsTabDashboard" class="dashboard-content account-settings hidden">
+               <div class="account-settings-heading">
+                <h4>Account Settings</h4> 
+                <h4>Email Verified: <span id="email-verified"></span></h2>
+                </div>
+                <div class="settings-container">
+                    <form>
+                        <div class="form-items">
+                            <div class="form-item">
+                                <label for="displayName">Username</label>
+                                <input name="displayName" type="text" />
+                            </div>
+                            <div class="form-item">
+                                <label for="email">Email</label>
+                                <input name="email" type="email" />
+                            </div> 
+                        </div>
+                        <div class="settings-button">
+                            <button type="submit" id="saveGeneralInfo" data-test ="generalInfo-btn">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="settings-container">
+                    <form class="password">
+                        <div class="form-item">
+                            <label for="currentPassword">Current password</label>
+                            <input class="current" name="currentPassword" type="password" placeholder="Enter current password"/>
+                        </div>
+                        <div class="form-items">
+                            <div class="form-item">
+                                <label for="newPassword">New password</label>
+                                <input name="newPassword" type="password" placeholder="Create a new password" />
+                            </div>
+                            <div class="form-item">
+                                <label for="confirmNewPassword">Confirm new password</label>
+                                <input name="confirmNewPassword" type="password" placeholder="Confirm your new password" />
+                            </div> 
+                        </div>
+                        <div class="settings-button">
+                            <button type="submit" id="saveSecurityinfo" data-test ="saveSecurityinfo-btn">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+              
             </div>
         </section>
       
