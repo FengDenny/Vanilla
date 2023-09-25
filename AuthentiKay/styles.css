@@ -351,6 +351,7 @@ main{
 .dashboard{
     display: flex;
     gap:10%;
+    padding-right:10px;
 }
 
 #dashboard-tabs{
@@ -379,6 +380,7 @@ main{
 
 }
 
+/* Activity */
 .activity{
     color:var(--white72);
     flex-grow:2;
@@ -467,6 +469,112 @@ main{
     font-weight: bold;
 }
 
+/* Account Settings */
+
+.account-settings{
+    width:100%;
+    max-width: 100%;
+}
+
+.account-settings-heading{
+    color:var(--white);
+    display:flex;
+    justify-content: space-between;
+}
+
+.account-settings-heading > h4:nth-child(1){
+    text-decoration: underline;
+    font-weight: 200;
+}
+
+.account-settings-heading > h4  span{
+    color:var(--white72)
+}
+
+
+.account-settings .settings-container{
+    background-color: transparent;
+    border:2px solid var(--golden);
+    height:auto;
+    margin-top:2rem;
+    border-radius:5px;
+    color:var(--white)
+}
+
+
+.settings-container .form-items{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.settings-container .form-item{
+    display: flex;
+    flex-direction: column;
+    padding:20px;
+}
+
+
+.settings-container .form-item label{
+ padding-bottom:5px;
+ font-size:0.9rem;
+ font-weight: bold;
+}
+
+.settings-container .form-item input{
+    color:var(--white72);
+    background-color: transparent;
+    border:1px solid var(--white);
+    border-radius: 5px;
+    height:39px;
+    width:450px;
+    max-width: 100%;
+    padding-left:5px;
+}
+
+.settings-container .form-item input:focus, 
+.settings-container .password .form-item .current:focus{
+    outline: 1px solid var(--golden);
+    border: 1px solid var(--golden);
+}
+
+
+.settings-container .settings-button{
+    display: flex;
+    justify-content: center;
+    padding-bottom:1rem;
+}
+
+.settings-container .settings-button button{
+    background-color: var(--golden93);
+    border:1px solid var(--golden93);
+    box-shadow: var(--lightBlkBoxShadow);
+    color:var(--white);
+    padding:10px;
+    width:250px;
+    max-width: 100%;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease-in, border 0.3s ease-in;
+}
+.settings-container .settings-button button:hover{
+    background:var(--golden);
+    border:1px solid var(--golden);
+}
+
+
+.settings-container .password .form-item .current{
+    color:var(--white72);
+    background-color: transparent;
+    border:1px solid var(--white);
+    border-radius: 5px;
+    height:39px;
+    width:100%;
+    max-width: 100%;
+    padding-left:5px;
+}
+
+
 /*  Animations  */
 #forgotPasswordTabForm .form-email, .password-hint-container .password-hint-card {
     animation: fadeInDown 1s ease forwards;
@@ -534,6 +642,26 @@ main{
 
 
 /* Media Queries */
+@media screen and (max-width: 980px){
+    .settings-container .form-items{
+      flex-wrap:wrap;
+      flex-direction: column;
+    }
+    .settings-container .form-item input {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .settings-container .settings-button{
+        padding:20px;
+
+    }
+    .settings-container .settings-button button{
+        width:100%;
+        max-width: 100%;
+    }
+}
+
 @media screen and (max-width: 900px) {
     .nav-container{
         flex-direction: column;
