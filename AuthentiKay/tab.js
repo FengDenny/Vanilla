@@ -1,7 +1,9 @@
 
-switchTab('signInTab');
-tabClickHandler()
-showPasswordHint()
+document.addEventListener("DOMContentLoaded", () => { 
+  switchTab('signInTab');
+  tabClickHandler()
+  showPasswordHint()
+});
 
 function switchTab(tabID){
     const tabs = document.querySelectorAll(".tab")
@@ -15,9 +17,7 @@ function switchTab(tabID){
 
     forms.forEach(form => form.classList.add("hidden"))
     activeForm.classList.remove("hidden")
-
     forgotPasswordTabHeader.classList.toggle("hidden", tabID !== "forgotPasswordTab");
-
 }
 
 function tabClickHandler(){
