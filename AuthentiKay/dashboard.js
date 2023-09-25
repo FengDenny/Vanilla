@@ -12,16 +12,48 @@ const firebaseApp = firebase.initializeApp({
   const auth = firebaseApp.auth();
   let previousUser = null
 
-  document.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("DOMContentLoaded", () => { 
+    tabClickHandler()
     auth.onAuthStateChanged((user) => {
       displayUserData(user)
       displayLastSignInStatus(user)
       displayMonthlyChanges(user)
+      displayVerifiedEmailStatus(user)
       listenToUserProfileChanges(user.uid)
     });
   });
 
+// Dashboard tabs
+function tabClickHandler(){
+  // Parent container for dasbboard tab items
+  const dashboardTabs = document.querySelector('#dashboard-tabs'); 
+  const tabs = dashboardTabs.querySelectorAll(".dashTab")
+  const dashboardContent = document.querySelectorAll(".dashboard-content")
 
+  function handleTabClicked(tabID){
+    dashboardContent.forEach(content  => {
+      if(content.id === `${tabID}Dashboard`) content.classList.remove("hidden")
+      else content.classList.add("hidden")
+    })  
+    tabs.forEach(tab => {
+    if(tab.getAttribute("data-tab") === tabID) tab.classList.add("active-tab")
+    else tab.classList.remove("active-tab")
+    addEventListener(tab)
+    })
+  }
+  
+  function addEventListener(element){
+    element.addEventListener("click", (e) => {
+      const tabID = e.target.getAttribute("data-tab")
+      handleTabClicked(tabID)
+    })
+  }
+  // const defaultTabID = 'activityTab';
+  const defaultTabID = 'settingsTab';
+  handleTabClicked(defaultTabID);
+}
+  
+// Activity Log Dashboard
   function displayLastSignInStatus(user){
     const lastSignIn = document.getElementById("last-sign-in")
     if(user){
@@ -34,6 +66,7 @@ const firebaseApp = firebase.initializeApp({
     const monthHeading = document.getElementById('month')
     if(user){
       const {lastLoginAt} = user.metadata
+      console.log(user)
       const getDate = dateExtraction(convertTimeStamp(lastLoginAt))
      const {currentDate, dateMonth, dateYear} = getDate
        // Format the month for display (add 1 to account for 0-indexed months)
@@ -98,6 +131,16 @@ function displayUserData(user) {
     }
   }
 
+  // Account Settings
+  function displayVerifiedEmailStatus(user){
+    const emailVerification = document.getElementById("email-verified")
+    if(user){
+      const {emailVerified} = user
+      emailVerification.textContent = emailVerified
+    }
+  }
+
+  // Helpers
   function convertTimeStamp(string){
     const timestamp = parseInt(string, 10)
     const date = new Date(timestamp)
