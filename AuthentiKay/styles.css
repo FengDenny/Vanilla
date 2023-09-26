@@ -66,12 +66,19 @@ main{
     align-items: center;
 }
 
+.nav-container-main{
+    display:flex;
+    justify-content: center;
+    padding: 1.5rem 0;
+}
+
 .navbar-logo{
     font-family: var(--righteous);
     color:var(--golden);
     font-weight:bold;
     font-size:2.5rem;
 }
+
 
 .navbar-content{
     display: flex;
@@ -97,6 +104,23 @@ main{
 
 .right-content-ul > li{
     padding-left: 1rem;
+}
+
+.right-content-ul .logout-btn{
+    background-color: transparent;
+    border:2px solid var(--golden93);
+    border-radius: 5px;
+    color:var(--white);
+    padding: 5px 15px;
+    cursor: pointer;
+    width:100px;
+    height:auto;
+}
+
+.right-content-ul .logout-btn:hover{
+    border:2px solid var(--golden);
+    background:var(--golden);
+    transition: background 0.3s ease-in, border 0.3s ease-in;
 }
 
 .mid-content ul > li > a:hover{
@@ -340,7 +364,7 @@ main{
 /* Dashboard */
 .userDisplayNameHeading{
     color:var(--white72);
-    margin-top:2px;
+    margin-top:8px;
     font-size:0.9rem;
 }
 
@@ -643,6 +667,20 @@ main{
 
 /* Media Queries */
 @media screen and (max-width: 980px){
+    .dashboard{
+        flex-direction: column;
+    }
+
+    #dashboard-tabs{
+        margin-bottom: 1rem;
+        flex-direction: row;
+        justify-content: space-between;
+        width:300px;
+        max-width: 100%;
+        height:auto;
+        margin:20px auto;
+    }
+
     .settings-container .form-items{
       flex-wrap:wrap;
       flex-direction: column;
@@ -657,8 +695,21 @@ main{
 
     }
     .settings-container .settings-button button{
-        width:100%;
+        width:350px;
         max-width: 100%;
+    }
+
+    .account-settings-heading {
+        flex-direction: column;
+    }
+
+    .account-settings-heading > h4{
+        padding: 10px 0;
+        text-align: center;
+    }
+
+    .account-settings-heading > h4:last-of-type{
+        font-size:0.9rem
     }
 }
 
@@ -672,16 +723,15 @@ main{
     }
     .left-content{
         /* top | right | bottom | left */
-        margin:10px 54px 10px 0; 
+        margin:4px 5px 10px 0; 
     }
     .right-content{
         margin:5px 0;
         padding:0;
     }
-
-    .right-content-ul{
-      flex-direction: column;
-      /* padding-left:2.5rem; */
+    
+    .right-content .logout-btn{
+        margin-top:5px
     }
 
     .userDisplayNameHeading{
