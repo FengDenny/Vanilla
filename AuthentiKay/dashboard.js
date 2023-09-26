@@ -12,8 +12,12 @@ const firebaseApp = firebase.initializeApp({
   const auth = firebaseApp.auth();
   let previousUser = null
 
+
+
+
   document.addEventListener("DOMContentLoaded", () => { 
     tabClickHandler()
+    logOut()
     auth.onAuthStateChanged((user) => {
       displayUserData(user)
       displayLastSignInStatus(user)
@@ -51,6 +55,13 @@ function tabClickHandler(){
   // const defaultTabID = 'activityTab';
   const defaultTabID = 'settingsTab';
   handleTabClicked(defaultTabID);
+}
+
+function logOut(){
+  const logoutBtn = document.getElementById("logoutBtn")
+  logoutBtn.addEventListener("click", () => {
+    auth.signOut().then(() => window.location.href ="/").catch((error) => console.log(error))
+  })
 }
   
 // Activity Log Dashboard
