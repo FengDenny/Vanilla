@@ -10,9 +10,6 @@ const firebaseApp = firebase.initializeApp({
   
   const db = firebaseApp.firestore();
   const auth = firebaseApp.auth();
-  let previousUser = null
-
-
 
 
   document.addEventListener("DOMContentLoaded", () => { 
@@ -24,6 +21,8 @@ const firebaseApp = firebase.initializeApp({
       displayMonthlyChanges(user)
       displayVerifiedEmailStatus(user)
       listenToUserProfileChanges(user.uid)
+      saveUpdatedEmailAndDisplayName(user.uid)
+      resetMonthlyChanges(user.uid)
     });
   });
 
@@ -77,7 +76,6 @@ function logOut(){
     const monthHeading = document.getElementById('month')
     if(user){
       const {lastLoginAt} = user.metadata
-      console.log(user)
       const getDate = dateExtraction(convertTimeStamp(lastLoginAt))
      const {currentDate, dateMonth, dateYear} = getDate
        // Format the month for display (add 1 to account for 0-indexed months)
@@ -103,37 +101,39 @@ function listenToUserProfileChanges(userId) {
   const changesNumberElement = document.getElementById('changes-number');
   const changesTitleElement = document.getElementById('changes-title');
 
-  query.get().then((querySnapshot) => {
-    if (!querySnapshot.empty) {
-      // Get the first document from the query (there should be only one)
-      const doc = querySnapshot.docs[0];
-      const userData = doc.data();
-      // Compare the new data with the previous user data
-      if (previousUser) {
-        let changeCount = 0;
-        for (const field in userData) {
-          if (userData[field] !== previousUser[field])  changeCount++;
-          
-        }
-        changesNumberElement.textContent = changeCount;
-        changesTitleElement.textContent = changeCount === 1 ? 'Change' : 'Changes';
-      } else {
-        changesNumberElement.textContent = 0;
-        changesTitleElement.textContent = 'Change';
-      }
-
-      // Update the previousUser reference
-      previousUser = { ...userData };
+  query.onSnapshot((querySnapshot) => {
+    if(!querySnapshot.empty){
+      const doc = querySnapshot.docs[0]
+      const userData = doc.data()
+      const changesCount = userData.changes || 0
+      changesNumberElement.textContent = changesCount
+      changesTitleElement.textContent = changesCount === 1 ? 'Change' : "Changes"
     }
-  });
+  })
+
 }
 
 function displayUserData(user) {
     const userDisplayNameElement = document.getElementById("userDisplayName")
+    function updateDisplayName(displayName) {
+      userDisplayNameElement.textContent = displayName || "User";
+      userDisplayNameElement.classList.remove("hidden");
+    }
+  
     if(user){
         const {displayName} = user
-        userDisplayNameElement.textContent =displayName || "User"
-        userDisplayNameElement.classList.remove("hidden")
+        updateDisplayName(displayName)
+        const usersRef = db.collection("users");
+        const query = usersRef.where("uid", "==", user.uid);
+        query.onSnapshot((querySnapshot) => {
+          if(!querySnapshot.empty){
+            const doc = querySnapshot.docs[0]
+            const {displayName} = doc.data()
+            if(displayName !== userDisplayNameElement.textContent){
+              updateDisplayName(displayName)
+            }
+          }
+        })
         window.history.replaceState(null, null, window.location.href);
     }else{
         userDisplayNameElement.textContent=""
@@ -150,6 +150,69 @@ function displayUserData(user) {
       emailVerification.textContent = emailVerified
     }
   }
+  
+  function updateEmailAndDisplayName(userId){
+
+    return new Promise((resolve, reject) => {
+        const displayNameInput = document.getElementById("displayName")
+        const emailInput = document.getElementById("email")
+        const usersRef = db.collection("users");
+        const query = usersRef.where("uid", "==", userId);
+        query.get().then((snapshot) => {
+          if(!snapshot.empty){
+            const doc = snapshot.docs[0]
+            const user = doc.data()
+            const updatePromises = []
+            if(displayNameInput.value &&  user.displayName !== displayNameInput.value){
+            const profileUpdatePromise =  auth.currentUser.updateProfile({
+                displayName : displayNameInput.value
+              }).then(() => {
+                return doc.ref.update({displayName:displayNameInput.value})
+              })
+              updatePromises.push(profileUpdatePromise)
+            }
+
+            if( emailInput.value && user.email !== emailInput.value){
+              const emailUpdatePromise = auth.currentUser.updateEmail(emailInput.value)
+              .then(() => {
+                return doc.ref.update({email:emailInput.value})
+              })
+              updatePromises.push(emailUpdatePromise)
+            }
+
+            const changesCount = updatePromises.length
+            console.log(changesCount)
+            if(changesCount > 0){
+              updatePromises.push(incrementChangesField(doc.ref, changesCount))
+            }
+            
+            Promise.all(updatePromises)
+            .then(() => {
+              console.log("Changed saved Sucessfully")
+              resolve()
+            })
+            .catch((error) => {
+              console.error("Error updating: ", error)
+              reject(error)
+            })
+          } else{
+            reject(new Error("User not found"))
+          }
+      })
+    })
+  }
+
+  function saveUpdatedEmailAndDisplayName(userId){
+    const generalInfoForm = document.getElementById("generalInfoForm")
+    generalInfoForm.addEventListener("submit", function(e) {
+      e.preventDefault();
+      updateEmailAndDisplayName(userId)
+      .then(() => console.log("Saved successfully"))
+      .catch((error) => console.log(error.message))
+    })
+  }
+
+
 
   // Helpers
   function convertTimeStamp(string){
@@ -166,3 +229,73 @@ function displayUserData(user) {
     return {currentDate, dateMonth, dateYear}
   }
   
+  function incrementChangesField(docRef, changesCount) {
+    return docRef.update({
+      changes: firebase.firestore.FieldValue.increment(changesCount),
+    });
+  }
+
+  function resetMonthlyChanges(userId) {
+    const currentDate = new Date();
+    const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+    console.log('Current Date:', currentDate);
+    console.log('First Day of Month:', firstDayOfMonth);
+  
+    // Compare year, month, and date without considering time
+    if (
+      currentDate.getFullYear() === firstDayOfMonth.getFullYear() &&
+      currentDate.getMonth() === firstDayOfMonth.getMonth() &&
+      currentDate.getDate() === firstDayOfMonth.getDate()
+    ) {
+      const usersRef = db.collection('users');
+      const query = usersRef.where("uid", "==", userId);
+  
+      query.get()
+        .then((querySnapshot) => {
+          const batch = db.batch();
+          console.log('Query Snapshot:', querySnapshot.docs);
+  
+          querySnapshot.forEach((doc) => {
+            const userRef = usersRef.doc(doc.id);
+            batch.update(userRef, { changes: 0 });
+          });
+  
+          return batch.commit();
+        })
+        .then(() => {
+          console.log('Monthly changes reset successfully');
+        })
+        .catch((error) => {
+          console.error('Error resetting monthly changes:', error);
+        });
+    }
+  }
+  
+  
+
+  // function testMonthlyChangesReset(userId) {
+  //   // Define the date representing the first day of the month
+  //   const originalDate = Date;
+  //   const firstDayOfMonth = new Date();
+  //   firstDayOfMonth.setDate(1);
+  
+  //   // Temporarily override the Date object
+  //   Date = class extends originalDate {
+  //     constructor() {
+  //       super();
+  //       if (arguments.length === 0) {
+  //         return new originalDate(firstDayOfMonth);
+  //       }
+  //       return new originalDate(...arguments);
+  //     }
+  //   };
+  
+  //   // Call the resetMonthlyChanges function
+  //   resetMonthlyChanges(userId);
+  
+  //   // Restore the original Date object
+  //   Date = originalDate;
+  // }
+  
+  // // Call the testing function
+  // testMonthlyChangesReset("XL8xazpLdBOjLQU8OalxAeRTDmG3");
