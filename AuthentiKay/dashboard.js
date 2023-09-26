@@ -13,6 +13,7 @@ const firebaseApp = firebase.initializeApp({
 
 
   document.addEventListener("DOMContentLoaded", () => { 
+    updatePassword();
     tabClickHandler()
     logOut()
     auth.onAuthStateChanged((user) => {
@@ -212,6 +213,46 @@ function displayUserData(user) {
     })
   }
 
+
+  function updatePassword(){
+    const currentPasswordInput = document.getElementById("currentPassword");
+    const newPasswordInput = document.getElementById("newPassword");
+    const confirmNewPasswordInput = document.getElementById("confirmNewPassword");
+    const securityinfoForm = document.getElementById("securityinfoForm");
+
+    securityinfoForm.addEventListener("submit", function(e){
+      e.preventDefault()
+      const currentPassword = currentPasswordInput.value
+      const newPassword = newPasswordInput.value
+      const confirmNewPassword = confirmNewPasswordInput.value
+      const user = auth.currentUser
+      if (newPassword !== confirmNewPassword) {
+        console.log("New password and confirm password must match.");
+        return;
+      }
+
+      const credential =  firebase.auth.EmailAuthProvider.credential(
+        user.email,
+        currentPassword
+      );
+
+      user.reauthenticateWithCredential(credential)
+      .then(() => {
+        return user.updatePassword(newPassword)
+      })
+      .then(() => {
+        console.log("Password updated successfully")
+        currentPasswordInput.value = "";
+        newPasswordInput.value = "";
+        confirmNewPasswordInput.value = "";
+      })
+      .catch((error) => {
+        console.error("Error updating password:", error);
+        console.log("Current password is incorrect")
+      })
+
+    })
+  }
 
 
   // Helpers
