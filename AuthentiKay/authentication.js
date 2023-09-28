@@ -11,10 +11,13 @@ const firebaseApp = firebase.initializeApp({
 const db = firebaseApp.firestore();
 const auth = firebaseApp.auth();
 
-register();
-signIn();
-resetPassword();
 
+document.addEventListener("DOMContentLoaded", () => {
+    resetPassword();
+    register();
+    signIn();
+    auth.onAuthStateChanged(checkLoggedInStatus);
+});
 
 function register() {
   const registerEmail = document.getElementById("registerEmail");
@@ -44,8 +47,8 @@ function register() {
           uid,
           metadata: { creationTime, lastSignInTime },
         };
-        await updateUserProfile(result.user, {email,  displayName });
-        await saveData(data);
+        updateUserProfile(result.user, {email,  displayName });
+        saveData(data);
         console.log(result.user)
         console.log(`${email} has successfully signed up`);
       } catch (error) {
@@ -62,17 +65,17 @@ function signIn() {
   const signInEmail = document.getElementById("signInEmail");
   const signInPassword = document.getElementById("signInPassword");
   const signInForm = document.getElementById("signInTabForm");
+
   signInForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     try {
-     await auth.signInWithEmailAndPassword(
+    const userCredentials = await auth.signInWithEmailAndPassword(
         signInEmail.value,
         signInPassword.value
       );
-  
+      updateUserLastSignInTime(userCredentials)
       signInEmail.value = "";
       signInPassword.value = "";
-      window.location.href = "dashboard.html";
     } catch (error) {
       e.preventDefault();
       errorCodeLookUp(error);
@@ -117,10 +120,11 @@ function logout() {
       window.location.href = "/"; 
     })
     .catch((error) => {
-      // An error occurred during sign-out.
       console.error("Error signing out:", error);
     });
 }
+
+// Helpers
 
 async function saveData(data) {
   try {
@@ -140,6 +144,20 @@ async function updateUserProfile(user, profile) {
   } catch (error) {
     console.log(error.message);
   }
+}
+
+async function updateUserLastSignInTime(userCredentials){
+  const usersRef = db.collection("users");
+  const query = usersRef.where("uid", "==", userCredentials.user.uid);
+  const {lastSignInTime} = userCredentials.user.metadata
+  await query.get().then(async (querySnapshot) => {
+    if(!querySnapshot.empty){
+      const userDoc = querySnapshot.docs[0]
+      await userDoc.ref.update({
+       "metadata.lastSignInTime": lastSignInTime
+      })
+    }
+  }).catch((error) => console.error(error))
 }
 
 function errorCodeLookUp(error) {
@@ -177,14 +195,10 @@ function isValidPassword(password) {
   return passwordRegex.test(password);
 }
 
-
-
 function checkLoggedInStatus(user){
   if(user){    
-    window.location.href="dashboard.html"
+    setTimeout(() => {
+      window.location.href="dashboard.html"
+    }, 1000)
   }
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-    auth.onAuthStateChanged(checkLoggedInStatus);
-});
