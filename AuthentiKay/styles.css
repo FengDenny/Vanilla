@@ -420,8 +420,8 @@ main{
 
 .activity .monthly-heading{
     display:flex;
-    position: absolute;
-    top:2.5rem;
+    position: relative;
+    top:2rem;
     color:var(--white);
 }
 
@@ -450,6 +450,7 @@ main{
 .activity-table{
     margin-top:3rem;
 }
+      
 
 .activity-table > table{
     width:100%;
@@ -471,7 +472,7 @@ main{
 
 .activity-table >table > tbody > tr{
     display: table-row;
-    border-bottom: 1px solid var(--white50);
+    border-bottom: 2px solid var(--white50);
 }
 
 .activity-table > table > tbody > tr > td {
@@ -711,6 +712,7 @@ main{
     .account-settings-heading > h4:last-of-type{
         font-size:0.9rem
     }
+   
 }
 
 @media screen and (max-width: 900px) {
@@ -737,6 +739,20 @@ main{
     .userDisplayNameHeading{
         margin-top:0.8rem;
     }
+
+    .activity .activity-heading{
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .activity .activity-heading > h4{
+        margin-top:5px;
+    }
+
+   .activity .monthly-heading{
+        font-size:0.8rem;
+    }
+
 }
 
 @media screen and (max-width: 480px) {
@@ -752,6 +768,18 @@ main{
     .hero-content-description h6{
         font-size: 0.8rem;
     }
+    .activity-table > table > tbody > tr {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        font-size:0.8rem;
+    }
+
+    .activity-table .table-heading th,
+    .activity-table > table > tbody > tr > td {
+        border-bottom: 1px solid var(--white50);
+        padding: 10px;
+    }
+
 }
 
 
