@@ -557,6 +557,11 @@ main{
     padding-left:5px;
 }
 
+.settings-container .form-item #generalInfoCurrentPassword{
+    width:100%;
+}
+
+
 .settings-container .form-item input:focus, 
 .settings-container .password .form-item .current:focus{
     outline: 1px solid var(--golden);
