@@ -17,7 +17,7 @@
             <nav class="left-content">
                 <ul>
                     <li>
-                        <h4 class="userDisplayNameHeading">Welcome, <span id="userDisplayName" class="hidden" data-test="display-name"></span></h4>
+                        <h4 class="userDisplayNameHeading" data-test="welcome-message">Welcome, <span id="userDisplayName" class="hidden" data-test="display-name"></span></h4>
                      </li>
                 </ul>
             </nav>
@@ -40,12 +40,12 @@
         </div>
     </div>
     <main>
-        <section class="container dashboard">
+        <section class="container dashboard" data-test="dashboard-content">
             <div id="dashboard-tabs" data-test="dashboard-tabs">
                 <div class="dashTab" data-tab="activityTab"> Activity</div>
                 <div class="dashTab" data-tab="settingsTab"> Account Settings </div>
             </div>  
-            <div id="activityTabDashboard" class="dashboard-content activity">
+            <div id="activityTabDashboard" class="dashboard-content activity" data-test="activity-tab-content">
                 <div class="activity-heading">
                     <h4>Activity log</h2>
                     <h4>Last updated: <span id="last-updated"></span></h2>
@@ -70,7 +70,7 @@
                       </table>
                 </div>
             </div>
-            <div id="settingsTabDashboard" class="dashboard-content account-settings hidden">
+            <div id="settingsTabDashboard" class="dashboard-content account-settings hidden" data-test="settings-tab-content">
                <div class="account-settings-heading">
                 <h4>Account Settings</h4> 
                 <h4>Email Verified: <span id="email-verified"></span></h2>
