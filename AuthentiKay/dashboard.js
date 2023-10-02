@@ -72,10 +72,10 @@ function logOut() {
 
 // Activity Log Dashboard
 function displayLastSignInStatus(user) {
-  const lastSignIn = document.getElementById("last-sign-in");
+  const lastUpdated = document.getElementById("last-updated");
   if (user) {
     const { lastLoginAt } = user.metadata;
-    lastSignIn.textContent = convertTimeStamp(lastLoginAt);
+    lastUpdated.textContent = convertTimeStamp(lastLoginAt);
   }
 }
 
