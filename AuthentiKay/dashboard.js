@@ -117,7 +117,7 @@ function addActivityLogRow(change) {
   const elementID = [
     "date-column",
     "description-column",
-    "current-column",
+    "previous-column",
     "updated-column",
   ];
 
@@ -142,7 +142,7 @@ function updateActivityLogRow(change) {
 
     // Update the relevant cells in the row
     row.querySelector("#description-column").textContent = description;
-    row.querySelector("#current-column").textContent = description === "Updated username" ? previousName : previousEmail;
+    row.querySelector("#previous-column").textContent = description === "Updated username" ? previousName : previousEmail;
     row.querySelector("#updated-column").textContent = description === "Updated username" ? currentName : currentEmail;
   }
 }
