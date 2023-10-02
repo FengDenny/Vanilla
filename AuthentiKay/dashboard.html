@@ -53,7 +53,7 @@
                 <div class="monthly-heading">
                     <h4 id="month"></h4>
                     <span class="hyphen">-</span> 
-                    <span  class="changes-number" id="changes-number"> </span>
+                    <span  class="changes-number" id="changes-number" data-test="number-of-changes"> </span>
                     <span class="changes-title" id="changes-title"> </span>
                 </div>
                 <div id="activityTable" class="activity-table">
@@ -80,16 +80,16 @@
                         <div class="form-items">
                             <div class="form-item">
                                 <label for="displayName">Username</label>
-                                <input id="displayName" name="displayName" type="text" />
+                                <input id="displayName" name="displayName" type="text" data-test="display-name-input" />
                             </div>
                             <div class="form-item">
                                 <label for="email">Email</label>
-                                <input id="email" name="email" type="email" />
+                                <input id="email" name="email" type="email" data-test="email-input"/>
                             </div> 
                         </div>
                             <div class="form-item">
                                 <label for="generalInfoCurrentPassword">For security purposes, please re-enter your current password</label>
-                                <input id="generalInfoCurrentPassword" name="generalInfoCurrentPassword" type="password" placeholder="Enter current password" />
+                                <input id="generalInfoCurrentPassword" name="generalInfoCurrentPassword" type="password" placeholder="Enter current password" data-test="general-password-input"/>
                             </div> 
                         <div class="settings-button">
                             <button type="submit" id="saveGeneralInfo" data-test ="generalInfo-btn">Save Changes</button>
