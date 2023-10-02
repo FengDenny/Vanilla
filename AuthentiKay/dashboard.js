@@ -457,7 +457,6 @@ function updateEmailAndDisplayName(userId) {
             resolve(changes);
           })
           .catch((error) => {
-            console.error("Error updating: ", error);
             reject(error);
           });
       } else {
