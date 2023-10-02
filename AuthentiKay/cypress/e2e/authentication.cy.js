@@ -33,20 +33,23 @@ describe('Authentication', () => {
     cy.get("@consoleLog").should("be.calledWith", "Password should be between 6 to 30 characters with one uppercase letter, lowercase letter, and a special character");
   });
 
-  // it("Should register as the password adhere to password requirements and should output signup successfully with the email on the console for now", () => {
-  //   const hintValidations = {
-  //     characters: true, 
-  //     uppercase: true,
-  //     lowercase: true,
-  //     specialCh: true, 
-  //   };
-  //   cy.get('[data-tab="registerTab"]').click();
-  //   cy.get('[data-test="test-show-hint"]').click()
-  //   cy.checkPasswordHint("test@example.com", "Password!12", hintValidations);
-  //   cy.get('[data-test="register-btn"]').click()
-  //   cy.get("@consoleLog").should("be.calledWith", "test@example.com has successfully signed up");
-  // });
-  it("Should not register as the email already sigend up and should output The email address is already in use by another account to the console for now", () => {
+  it("Should register as the password adhere to password requirements and navigate to dashboard.html then back to homepage when logout button is clicked", () => {
+    const hintValidations = {
+      characters: true, 
+      uppercase: true,
+      lowercase: true,
+      specialCh: true, 
+    };
+    cy.get('[data-tab="registerTab"]').click();
+    cy.get('[data-test="test-show-hint"]').click()
+    cy.checkPasswordHint("test@example.com", "Password!12", hintValidations);
+    cy.get('[data-test="register-btn"]').click()
+    cy.url().should("include", "dashboard.html");
+    cy.get('[data-test="logoutBtn"]').click()
+    cy.url().should("include", "/");
+
+  });
+  it("Should not register as the email already signed up and should output The email address is already in use by another account to the console for now", () => {
     const hintValidations = {
       characters: true, 
       uppercase: true,
@@ -74,10 +77,10 @@ describe('Authentication', () => {
     cy.get("@consoleLog").should("be.calledWith", "This user has not been registered.");
   });
 
- it("Should be able to sign in and should output Welcome back, ${email} to the console for now", () => {
+ it("Should be able to sign in and navigate to dashboard.html", () => {
     cy.checkSignIn("test@example.com", "Password!12");
     cy.get('[data-test="signIn-btn"]').click()
-    cy.get("@consoleLog").should("be.calledWith", "Welcome back, test@example.com!");
+    cy.url().should("include", "dashboard.html");
   });
 
   it("Should send a email to recover password and console log password link has been sent to the provided email", () => {
