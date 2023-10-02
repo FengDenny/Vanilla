@@ -67,11 +67,11 @@ function logOut() {
 }
 
 // Activity Log Dashboard
-function displayLastSignInStatus(user) {
+async function displayLastSignInStatus(user) {
   const lastUpdated = document.getElementById("last-updated");
   if (user) {
-    const { lastLoginAt } = user.metadata;
-    lastUpdated.textContent = convertTimeStamp(lastLoginAt);
+    const timestamp = await updatedTimestamp(user.uid)
+    lastUpdated.textContent = timestamp
   }
 }
 
@@ -193,13 +193,13 @@ function populateActivityLog(changesData) {
   }
 }
 
+
 async function fetchAndPopulateActivityLog(userId, callback) {
   try {
     const { currentYear, currentMonth } = fetchCurrentYearAndMonth();
     const changesData = await fetchMonthlyData(userId, currentYear, currentMonth);
     const changesCount = changesData.length; 
     populateActivityLog(changesData);
-    console.log(changesData)
     if (typeof callback === "function") {
       callback(); // Call the callback function to update the UI
     }
@@ -532,6 +532,28 @@ function updateCurrentPassword() {
 }
 
 // Helpers
+
+async function updatedTimestamp(userId){
+  try{
+    const { currentYear, currentMonth } = fetchCurrentYearAndMonth();
+    const changesData = await fetchMonthlyData(userId, currentYear, currentMonth);
+    const earliestTimestamp = findEarliestTimestamp(changesData);
+    return earliestTimestamp
+  }catch(error){
+    console.log(error)
+  }
+}
+function findEarliestTimestamp(changesData) {
+  if (!changesData || changesData.length === 0) {
+    return null;
+  }
+
+  const timestamps = changesData.map((entry) => entry.timestamp);
+  const sortedTimestamps = sortByTimestamp(timestamps, "descending")
+  const earliestTimestamp = convertTimeStamp(sortedTimestamps[0].seconds * 1000);
+
+  return earliestTimestamp;
+}
 
 function sortByTimestamp(arr, sortOrder = "ascending"){
   switch(sortOrder){
