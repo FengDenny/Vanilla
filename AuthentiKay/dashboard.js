@@ -442,20 +442,8 @@ function updateEmailAndDisplayName(userId) {
 function saveUpdatedEmailAndDisplayName(userId) {
   const generalInfoForm = document.getElementById("generalInfoForm");
 
-  // Track whether the form is currently being submitted
-  let isSubmitting = false;
-
   generalInfoForm.addEventListener("submit", function (e) {
     e.preventDefault();
-
-    // Check if the form is already being submitted
-    if (isSubmitting) {
-      console.log("Form is already being submitted.");
-      return;
-    }
-
-    // Set isSubmitting to true to prevent multiple submissions
-    isSubmitting = true;
 
     updateEmailAndDisplayName(userId)
       .then((changes) => {
@@ -466,10 +454,6 @@ function saveUpdatedEmailAndDisplayName(userId) {
         console.log("Saved successfully");
       })
       .catch((error) => console.log(error.message))
-      .finally(() => {
-        // Reset isSubmitting to allow future submissions
-        isSubmitting = false;
-      });
   });
 }
 
@@ -560,6 +544,13 @@ function resetMonthlyChanges(userId) {
   console.log("Current Date:", currentDate);
   console.log("First Day of Month:", firstDayOfMonth);
 
+  const lastResetDate = localStorage.getItem("lastMonthlyResetDate")
+
+  if(lastResetDate !== null){
+    console.log("Monthly reset already performed this month.");
+    return;
+  }
+
   if (
     currentDate.getFullYear() === firstDayOfMonth.getFullYear() &&
     currentDate.getMonth() === firstDayOfMonth.getMonth() &&
@@ -583,6 +574,7 @@ function resetMonthlyChanges(userId) {
       })
       .then(() => {
         console.log("Monthly changes reset successfully");
+        localStorage.setItem("lastMonthlyResetDate", currentDate.toISOString());
       })
       .catch((error) => {
         console.error("Error resetting monthly changes:", error);
