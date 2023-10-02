@@ -164,7 +164,6 @@ async function fetchMonthlyData(userId, year, month, sortOrder = 'descending') {
         fetchMonthlyChanges(monthlyChangesRef.collection("emailChanges"))
       ]);
 
-      console.log(sortByTimestamp([...usernameChanges, ...emailChanges], sortOrder))
 
       return sortByTimestamp([...usernameChanges, ...emailChanges], sortOrder);
     } else {
@@ -176,6 +175,8 @@ async function fetchMonthlyData(userId, year, month, sortOrder = 'descending') {
     return [];
   }
 }
+
+
 
 async function fetchMonthlyChanges(collectionRef) {
   const snapshot = await collectionRef.get();
@@ -196,14 +197,29 @@ async function fetchAndPopulateActivityLog(userId, callback) {
   try {
     const { currentYear, currentMonth } = fetchCurrentYearAndMonth();
     const changesData = await fetchMonthlyData(userId, currentYear, currentMonth);
+    const changesCount = changesData.length; 
     populateActivityLog(changesData);
+    console.log(changesData)
     if (typeof callback === "function") {
       callback(); // Call the callback function to update the UI
+    }
+
+    const usersRef = db.collection("users");
+    const querySnapshot = await usersRef.where("uid", "==", userId).get();
+
+    if (!querySnapshot.empty) {
+      const doc = querySnapshot.docs[0]; // Assuming there's only one matching document
+      const docRef = doc.ref;
+
+      await incrementChangesField(docRef, changesCount);
     }
   } catch (error) {
     console.error("Error fetching and populating activity log:", error);
   }
 }
+
+
+
 function clearActivityLog() {
   const activityTable = document.querySelector("#activityTable tbody");
   const rows = activityTable.querySelectorAll("tr");
@@ -561,7 +577,7 @@ function dateExtraction(date) {
 
 function incrementChangesField(docRef, changesCount) {
   return docRef.update({
-    changes: firebase.firestore.FieldValue.increment(changesCount),
+    changes:changesCount
   });
 }
 
