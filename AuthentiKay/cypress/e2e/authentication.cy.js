@@ -44,6 +44,7 @@ describe('Authentication', () => {
     cy.get('[data-test="test-show-hint"]').click()
     cy.checkPasswordHint("test@example.com", "Password!12", hintValidations);
     cy.get('[data-test="register-btn"]').click()
+    cy.wait(1000);
     cy.url().should("include", "dashboard.html");
     cy.get('[data-test="logoutBtn"]').click()
     cy.url().should("include", "/");
@@ -80,6 +81,7 @@ describe('Authentication', () => {
  it("Should be able to sign in and navigate to dashboard.html", () => {
     cy.checkSignIn("test@example.com", "Password!12");
     cy.get('[data-test="signIn-btn"]').click()
+    cy.wait(1000);
     cy.url().should("include", "dashboard.html");
   });
 
