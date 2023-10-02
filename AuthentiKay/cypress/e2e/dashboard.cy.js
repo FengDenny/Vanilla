@@ -26,7 +26,7 @@ describe('Dashboard', () => {
   });
 
   it("Should display welcoming message of Welcome, test" , () => {
-    cy.get('[data-test="welcome-message"').should("contain.text", "Welcome, test")
+    cy.get('[data-test="welcome-message"]').should("contain.text", "Welcome, test")
   })
 
   it("Should initially show the Activity tab as active", () => {
