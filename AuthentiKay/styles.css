@@ -442,7 +442,7 @@ main{
     font-weight: 200;
  }
 
-.activity .activity-heading #last-sign-in{
+.activity .activity-heading #last-updated{
     color:var(--white72)
 }
 
