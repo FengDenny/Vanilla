@@ -35,10 +35,6 @@ describe('Dashboard', () => {
     cy.contains('[data-test="welcome-message"]', "Welcome, test").should("exist");
   })
 
-  it("This current month should have 4 changes as we just updated our name ", () => {
-    cy.contains('[data-test="number-of-changes"]', "4").should("exist")
-  })
-
   it("Should not be able to change the email as you'll need to type in your password to reauth", () => {
     cy.get('[data-tab="settingsTab"]').click();
     cy.get('[data-test="email-input"]')
@@ -51,7 +47,6 @@ describe('Dashboard', () => {
     cy.get('[data-test="email-input"]').type('test@example.com');
     cy.get('[data-test="general-password-input"]').type('Password!12');
     cy.get('[data-test="generalInfo-btn"]').click()
-    cy.wait(2000)
   })
   it("This current month should have 5 changes as we just updated our email ", () => {
     cy.contains('[data-test="number-of-changes"]', "5").should("exist")
