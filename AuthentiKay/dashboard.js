@@ -10,10 +10,11 @@ const firebaseApp = firebase.initializeApp({
 
 const db = firebaseApp.firestore();
 const auth = firebaseApp.auth();
-let usernameChangesListener;
+const activityLogMap  = new Map()
+
 
 document.addEventListener("DOMContentLoaded", () => {
-  updatePassword();
+  updateCurrentPassword();
   tabClickHandler();
   logOut();
   auth.onAuthStateChanged((user) => {
@@ -30,33 +31,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Dashboard tabs
 function tabClickHandler() {
-  // Parent container for dasbboard tab items
   const dashboardTabs = document.querySelector("#dashboard-tabs");
   const tabs = dashboardTabs.querySelectorAll(".dashTab");
   const dashboardContent = document.querySelectorAll(".dashboard-content");
 
   function handleTabClicked(tabID) {
     dashboardContent.forEach((content) => {
-      if (content.id === `${tabID}Dashboard`)
-        content.classList.remove("hidden");
-      else content.classList.add("hidden");
+      content.classList.toggle("hidden", content.id !== `${tabID}Dashboard`);
     });
     tabs.forEach((tab) => {
-      if (tab.getAttribute("data-tab") === tabID)
-        tab.classList.add("active-tab");
-      else tab.classList.remove("active-tab");
-      addEventListener(tab);
+      tab.classList.toggle("active-tab", tab.getAttribute("data-tab") === tabID);
     });
   }
 
-  function addEventListener(element) {
-    element.addEventListener("click", (e) => {
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", (e) => {
       const tabID = e.target.getAttribute("data-tab");
       handleTabClicked(tabID);
     });
-  }
+  });
+
   const defaultTabID = "activityTab";
-  // const defaultTabID = 'settingsTab';
   handleTabClicked(defaultTabID);
 }
 
@@ -77,35 +72,6 @@ function displayLastSignInStatus(user) {
     const { lastLoginAt } = user.metadata;
     lastUpdated.textContent = convertTimeStamp(lastLoginAt);
   }
-}
-
-function populateActivityLog(monthlyChangesData) {
-  const activityTable = document.querySelector("#activityTable tbody");
-  monthlyChangesData.forEach((change) => {
-    const row = document.createElement("tr");
-    row.classList.add("column-data");
-    const { timestamp, description, previousName, currentName } = change;
-    if (timestamp === null) return;
-    const textContentData = [
-      convertFSTimestampToJSDate(timestamp),
-      description,
-      previousName,
-      currentName,
-    ];
-    const elementID = [
-      "date-column",
-      "description-column",
-      "current-column",
-      "updated-column",
-    ];
-    for (let i = 0; i < textContentData.length; i++) {
-      const cell = document.createElement("td");
-      cell.id = elementID[i];
-      cell.textContent = textContentData[i];
-      row.appendChild(cell);
-    }
-    activityTable.appendChild(row);
-  });
 }
 
 async function displayMonthlyChanges(user) {
@@ -130,64 +96,111 @@ async function displayMonthlyChanges(user) {
   }
 }
 
-async function fetchUsernameChanges(userId, year, month, callback) {
-  const usersRef = db.collection("users");
-  try {
-    const querySnapshot = await usersRef.where("uid", "==", userId).get();
-    if (!querySnapshot.empty) {
-      const doc = querySnapshot.docs[0]; // Get the first (and hopefully only) document
-      const documentId = doc.id;
+// Function to add a new activity log row
+function addActivityLogRow(change) {
+  const activityTable = document.querySelector("#activityTable tbody");
+  const row = document.createElement("tr");
+  row.classList.add("column-data");
 
-      // Now, you can proceed with fetching the monthly changes using the document ID
-      const monthlyChangesRef = usersRef
-        .doc(documentId)
-        .collection("monthlyChanges")
-        .doc(`${year}-${month}`)
-        .collection("usernameChanges");
+  const { timestamp, description, previousName, currentName, previousEmail, currentEmail } = change;
 
-      monthlyChangesRef.onSnapshot((snapshot) => {
-        const usernameChangesData = [];
-        snapshot.forEach((usernameChangeDoc) => {
-          const usernameChange = usernameChangeDoc.data();
-          usernameChangesData.push(usernameChange);
-        });
-        callback(usernameChangesData);
-      });
-    } else {
-      console.log("No document found with UID:", userId);
-    }
-  } catch (error) {
-    console.error("Error fetching documents:", error);
+  if (timestamp === null) return;
+
+  const textContentData = [
+    convertFSTimestampToJSDate(timestamp),
+    description,
+    description === "Updated username" ? previousName : previousEmail,
+    description === "Updated username" ? currentName : currentEmail,
+  ];
+
+  const elementID = [
+    "date-column",
+    "description-column",
+    "current-column",
+    "updated-column",
+  ];
+
+  for (let i = 0; i < textContentData.length; i++) {
+    const cell = document.createElement("td");
+    cell.id = elementID[i];
+    cell.textContent = textContentData[i];
+    row.appendChild(cell);
+  }
+
+  // Add the row to the table and keep a reference in the map
+  activityTable.appendChild(row);
+  activityLogMap.set(change.timestamp, row);
+}
+
+// Function to update an existing activity log row
+function updateActivityLogRow(change) {
+  const row = activityLogMap.get(change.timestamp);
+
+  if (row) {
+    const [_, description, previousName, currentName, previousEmail, currentEmail] = change;
+
+    // Update the relevant cells in the row
+    row.querySelector("#description-column").textContent = description;
+    row.querySelector("#current-column").textContent = description === "Updated username" ? previousName : previousEmail;
+    row.querySelector("#updated-column").textContent = description === "Updated username" ? currentName : currentEmail;
   }
 }
 
-function fetchAndPopulateActivityLog(userId) {
+async function fetchChangesData(userId, year, month) {
+  try {
+    const usersRef = db.collection("users");
+    const querySnapshot = await usersRef.where("uid", "==", userId).get();
+
+    if (!querySnapshot.empty) {
+      const doc = querySnapshot.docs[0];
+      const documentId = doc.id;
+      const monthlyChangesRef = usersRef.doc(documentId)
+        .collection("monthlyChanges")
+        .doc(`${year}-${month}`);
+
+      const [usernameChanges, emailChanges] = await Promise.all([
+        fetchMonthlyChanges(monthlyChangesRef.collection("usernameChanges")),
+        fetchMonthlyChanges(monthlyChangesRef.collection("emailChanges"))
+      ]);
+
+      return [...usernameChanges, ...emailChanges];
+    } else {
+      console.log("No document found with UID:", userId);
+      return [];
+    }
+  } catch (error) {
+    console.error("Error fetching changes data:", error);
+    return [];
+  }
+}
+
+async function fetchMonthlyChanges(collectionRef) {
+  const snapshot = await collectionRef.get();
+  return snapshot.docs.map((doc) => doc.data());
+}
+
+function populateActivityLog(changesData) {
+  clearActivityLog();
+
+  for (const change of changesData) {
+    if (change) {
+      addActivityLogRow(change);
+    }
+  }
+}
+
+async function fetchAndPopulateActivityLog(userId, callback) {
   try {
     const { currentYear, currentMonth } = fetchCurrentYearAndMonth();
-
-    // Define a callback function to handle the received data
-    const handleUsernameChanges = (usernameChangesData) => {
-      console.log(usernameChangesData);
-      if (usernameChangesData) {
-        clearActivityLog();
-        populateActivityLog(usernameChangesData);
-      } else {
-        console.log("No username changes data found.");
-      }
-    };
-
-    // Use fetchUsernameChanges with the callback
-    fetchUsernameChanges(
-      userId,
-      currentYear,
-      currentMonth,
-      handleUsernameChanges
-    );
+    const changesData = await fetchChangesData(userId, currentYear, currentMonth);
+    populateActivityLog(changesData);
+    if (typeof callback === "function") {
+      callback(); // Call the callback function to update the UI
+    }
   } catch (error) {
     console.error("Error fetching and populating activity log:", error);
   }
 }
-
 function clearActivityLog() {
   const activityTable = document.querySelector("#activityTable tbody");
   const rows = activityTable.querySelectorAll("tr");
@@ -361,83 +374,80 @@ function updateEmailAndDisplayName(userId) {
       password
     );
 
-    user
-      .reauthenticateWithCredential(credentials)
-      .then(() => {
-        const usersRef = db.collection("users");
-        const query = usersRef.where("uid", "==", userId);
+    const usersRef = db.collection("users");
+    const query = usersRef.where("uid", "==", userId);
 
-        query.get().then((snapshot) => {
-          if (!snapshot.empty) {
-            const doc = snapshot.docs[0];
-            const userData = doc.data();
-            const updatePromises = [];
-            const changes = [];
+    query.get().then((snapshot) => {
+      if (!snapshot.empty) {
+        const doc = snapshot.docs[0];
+        const userData = doc.data();
+        const updatePromises = [];
+        const changes = [];
 
-            if (
-              displayNameInput.value &&
-              userData.displayName !== displayNameInput.value
-            ) {
-              const profileUpdatePromise = auth.currentUser
-                .updateProfile({
-                  displayName: displayNameInput.value,
-                })
-                .then(() => {
-                  return doc.ref.update({
-                    displayName: displayNameInput.value,
-                  });
-                });
-              updatePromises.push(profileUpdatePromise);
-              changes.push({
-                description: "Updated username",
-                previousName: user.displayName,
-                currentName: displayNameInput.value,
+        if (
+          displayNameInput.value &&
+          userData.displayName !== displayNameInput.value
+        ) {
+          const profileUpdatePromise = auth.currentUser
+            .updateProfile({
+              displayName: displayNameInput.value,
+            })
+            .then(() => {
+              return doc.ref.update({
+                displayName: displayNameInput.value,
               });
-            }
+            });
+          updatePromises.push(profileUpdatePromise);
+          changes.push({
+            description: "Updated username",
+            previousName: user.displayName,
+            currentName: displayNameInput.value,
+          });
+        }
 
-            if (emailInput.value && userData.email !== emailInput.value) {
-              const emailUpdatePromise = auth.currentUser
-                .updateEmail(emailInput.value)
-                .then(() => {
-                  return doc.ref.update({ email: emailInput.value });
-                });
-              updatePromises.push(emailUpdatePromise);
-              changes.push({
-                description: "Updated email",
-                previousEmail: user.email,
-                currentEmail: email.value,
-              });
-            }
+        if (emailInput.value && userData.email !== emailInput.value) {
+          // Only reauthenticate if email is being updated
+          const emailUpdatePromise = auth.currentUser
+            .reauthenticateWithCredential(credentials)
+            .then(() => {
+              return auth.currentUser.updateEmail(emailInput.value);
+            })
+            .then(() => {
+              return doc.ref.update({ email: emailInput.value });
+            });
+          updatePromises.push(emailUpdatePromise);
+          changes.push({
+            description: "Updated email",
+            previousEmail: user.email,
+            currentEmail: emailInput.value,
+          });
+        }
 
-            const changesCount = updatePromises.length;
-            console.log(changesCount);
-            if (changesCount > 0) {
-              updatePromises.push(incrementChangesField(doc.ref, changesCount));
-            }
+        const changesCount = updatePromises.length;
+        console.log(changesCount);
+        if (changesCount > 0) {
+          updatePromises.push(incrementChangesField(doc.ref, changesCount));
+        }
 
-            Promise.all(updatePromises)
-              .then(() => {
-                displayNameInput.value = "";
-                emailInput.value = "";
-                generalInfoCurrentPasswordInput.value = "";
-                console.log("Changed saved successfully");
-                resolve(changes);
-              })
-              .catch((error) => {
-                console.error("Error updating: ", error);
-                reject(error);
-              });
-          } else {
-            reject(new Error("User not found"));
-          }
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-        reject(error);
-      });
+        Promise.all(updatePromises)
+          .then(() => {
+            displayNameInput.value = "";
+            emailInput.value = "";
+            generalInfoCurrentPasswordInput.value = "";
+            console.log("Changes saved successfully");
+            resolve(changes);
+          })
+          .catch((error) => {
+            console.error("Error updating: ", error);
+            reject(error);
+          });
+      } else {
+        reject(new Error("User not found"));
+      }
+    });
   });
 }
+
 
 function saveUpdatedEmailAndDisplayName(userId) {
   const generalInfoForm = document.getElementById("generalInfoForm");
@@ -449,15 +459,22 @@ function saveUpdatedEmailAndDisplayName(userId) {
       .then((changes) => {
         console.log(changes);
         if (changes && changes.length > 0) {
-          monthlyChanges(userId, changes);
+          monthlyChanges(userId, changes).then(() => {
+            // Update the activity log UI
+            fetchAndPopulateActivityLog(userId, () => {
+              console.log("Activity log updated after changes.");
+            });
+
+            console.log("Saved successfully");
+          });
         }
-        console.log("Saved successfully");
       })
-      .catch((error) => console.log(error.message))
+      .catch((error) => console.log(error.message));
   });
 }
 
-function updatePassword() {
+
+function updateCurrentPassword() {
   const currentPasswordInput = document.getElementById("currentPassword");
   const newPasswordInput = document.getElementById("newPassword");
   const confirmNewPasswordInput = document.getElementById("confirmNewPassword");
