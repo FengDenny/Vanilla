@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
     resetMonthlyChanges(user.uid);
     fetchAndPopulateActivityLog(user.uid);
   });
+  
 });
 
 // Dashboard tabs
@@ -103,11 +104,11 @@ function addActivityLogRow(change) {
   row.classList.add("column-data");
 
   const { timestamp, description, previousName, currentName, previousEmail, currentEmail } = change;
-
+  const {formattedDateAndTime} = convertFSTimestampToJSDate(timestamp)
   if (timestamp === null) return;
 
   const textContentData = [
-    convertFSTimestampToJSDate(timestamp),
+    formattedDateAndTime,
     description,
     description === "Updated username" ? previousName : previousEmail,
     description === "Updated username" ? currentName : currentEmail,
@@ -146,7 +147,7 @@ function updateActivityLogRow(change) {
   }
 }
 
-async function fetchChangesData(userId, year, month) {
+async function fetchMonthlyData(userId, year, month, sortOrder = 'descending') {
   try {
     const usersRef = db.collection("users");
     const querySnapshot = await usersRef.where("uid", "==", userId).get();
@@ -163,7 +164,9 @@ async function fetchChangesData(userId, year, month) {
         fetchMonthlyChanges(monthlyChangesRef.collection("emailChanges"))
       ]);
 
-      return [...usernameChanges, ...emailChanges];
+      console.log(sortByTimestamp([...usernameChanges, ...emailChanges], sortOrder))
+
+      return sortByTimestamp([...usernameChanges, ...emailChanges], sortOrder);
     } else {
       console.log("No document found with UID:", userId);
       return [];
@@ -192,7 +195,7 @@ function populateActivityLog(changesData) {
 async function fetchAndPopulateActivityLog(userId, callback) {
   try {
     const { currentYear, currentMonth } = fetchCurrentYearAndMonth();
-    const changesData = await fetchChangesData(userId, currentYear, currentMonth);
+    const changesData = await fetchMonthlyData(userId, currentYear, currentMonth);
     populateActivityLog(changesData);
     if (typeof callback === "function") {
       callback(); // Call the callback function to update the UI
@@ -225,7 +228,7 @@ function monthlyChanges(userId, changes) {
         changes.forEach((change) => {
           let changeDocumentRef;
           let changeData;
-
+          
           switch (change.description) {
             case "Updated username":
               changeDocumentRef = userDocRef
@@ -434,7 +437,7 @@ function updateEmailAndDisplayName(userId) {
             displayNameInput.value = "";
             emailInput.value = "";
             generalInfoCurrentPasswordInput.value = "";
-            console.log("Changes saved successfully");
+            console.log("Changes saved successfully", changes);
             resolve(changes);
           })
           .catch((error) => {
@@ -457,7 +460,6 @@ function saveUpdatedEmailAndDisplayName(userId) {
 
     updateEmailAndDisplayName(userId)
       .then((changes) => {
-        console.log(changes);
         if (changes && changes.length > 0) {
           monthlyChanges(userId, changes).then(() => {
             // Update the activity log UI
@@ -515,6 +517,18 @@ function updateCurrentPassword() {
 }
 
 // Helpers
+
+function sortByTimestamp(arr, sortOrder = "ascending"){
+  switch(sortOrder){
+    case "ascending":
+      return arr.slice().sort((a,b) => a.timestamp - b.timestamp)
+    case "descending":
+      return arr.slice().sort((a,b) => b.timestamp - a.timestamp)
+    default:
+      return arr
+  }
+}
+
 function fetchCurrentYearAndMonth() {
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
@@ -526,9 +540,9 @@ function convertFSTimestampToJSDate(timestamp) {
   const date = new Date(
     timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000
   );
-  // const formattedDate = convertTimeStamp(date.getTime()) // date + time
+  const formattedDateAndTime = convertTimeStamp(date.getTime()) // date + time
   const formattedDate = date.toLocaleDateString();
-  return formattedDate;
+  return {formattedDate, formattedDateAndTime};
 }
 
 function convertTimeStamp(string) {
