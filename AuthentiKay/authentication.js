@@ -49,8 +49,6 @@ function register() {
         };
         updateUserProfile(result.user, {email,  displayName });
         saveData(data);
-        console.log(result.user)
-        console.log(`${email} has successfully signed up`);
       } catch (error) {
         errorCodeLookUp(error);
         e.preventDefault();
@@ -112,17 +110,6 @@ function resetPassword() {
   });
 }
 
-function logout() {
-  auth
-    .signOut()
-    .then(() => {
-      console.log("User signed out");
-      window.location.href = "/"; 
-    })
-    .catch((error) => {
-      console.error("Error signing out:", error);
-    });
-}
 
 // Helpers
 
